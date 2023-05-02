@@ -45,12 +45,10 @@ public class AttractionController extends HttpServlet {
     public AttractionController(AttractionService attractionService) {
         super();
         this.attractionService = attractionService;
-        
     }
     
 	@RequestMapping(value ="/tripsearch", method = RequestMethod.GET)
 	public String tripSearch() {
-		
 		
 		return "attraction/tripsearch";
 	}
@@ -58,11 +56,8 @@ public class AttractionController extends HttpServlet {
 	@RequestMapping(value ="/search", method = RequestMethod.POST)
 	public String search(@RequestParam String ssido_code, @RequestParam String scontent_type_id, 
 			@RequestParam String title,Model model, HttpSession session) throws SQLException {
-//		String ssido_code=request.getParameter("sido_code");
 		int sido_code = Integer.parseInt(ssido_code);
-//		String scontent_type_id=request.getParameter("content_type_id");
 		int content_type_id = Integer.parseInt(scontent_type_id);
-//		String title=request.getParameter("title");
 		System.out.println(sido_code+" " + content_type_id +" "+ title);
 		
 		List<AttractionDto> attractionList = attractionService.attractionList(sido_code, content_type_id, title);
@@ -74,14 +69,31 @@ public class AttractionController extends HttpServlet {
 			System.out.println(attractionList.get(i).getTitle());
 		}
 		
-		// request.setAttribute("list", attractionList);
 		model.addAttribute("list", attractionList);
 		
-
-//		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/attraction/tripsearch.jsp");
-//		requestDispatcher.forward(request, response);
 		
 		return "attraction/tripsearch";
+	}
+	
+	@RequestMapping(value ="/searchPlan", method = RequestMethod.POST)
+	public String searchPlan(@RequestParam String ssido_code, @RequestParam String scontent_type_id, 
+			@RequestParam String title,Model model, HttpSession session) throws SQLException {
+		int sido_code = Integer.parseInt(ssido_code);
+		int content_type_id = Integer.parseInt(scontent_type_id);
+		System.out.println(sido_code+" " + content_type_id +" "+ title);
+		
+		List<AttractionDto> attractionList = attractionService.attractionList(sido_code, content_type_id, title);
+
+		QuickSort quickSort = new QuickSort();
+		quickSort.pivotNaturalSort(attractionList, 0, attractionList.size() - 1);
+		
+		for(int i = 0; i < attractionList.size(); i++) {
+			System.out.println(attractionList.get(i).getTitle());
+		}
+		
+		model.addAttribute("list", attractionList);
+		
+		return "attraction/tripplan";
 	}
     
 	@RequestMapping(value = "/tripplan",method = RequestMethod.GET)
@@ -91,87 +103,4 @@ public class AttractionController extends HttpServlet {
 		return "attraction/tripplan";
 	}
     
-	
-//	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		// TODO Auto-generated method stub
-//		try {
-//			doProcess(request, response);
-//		} catch (ServletException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
-//
-//	
-//	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		// TODO Auto-generated method stub
-//		try {
-//			doProcess(request, response);
-//		} catch (ServletException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
-//	
-//	public void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
-//		request.setCharacterEncoding("UTF-8");
-//		response.setContentType("text/html; charset=UTF-8");
-//		
-//		String action = request.getParameter("action");
-//		String root = request.getContextPath();
-//		
-//		if(action.equalsIgnoreCase("tripsearch")) {
-//			String ssido_code=request.getParameter("sido_code");
-//			int sido_code = Integer.parseInt(ssido_code);
-//			String scontent_type_id=request.getParameter("content_type_id");
-//			int content_type_id = Integer.parseInt(scontent_type_id);
-//			String title=request.getParameter("title");
-//			System.out.println(sido_code+" " + content_type_id +" "+ title);
-//			
-//			List<AttractionDto> attractionList = attractionService.attractionList(sido_code, content_type_id, title);
-//
-//			QuickSort quickSort = new QuickSort();
-//			quickSort.pivotNaturalSort(attractionList, 0, attractionList.size() - 1);
-//			
-//			for(int i = 0; i < attractionList.size(); i++) {
-//				System.out.println(attractionList.get(i).getTitle());
-//			}
-//			
-//			request.setAttribute("list", attractionList);
-//			
-//
-//			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/attraction/tripsearch.jsp");
-//			requestDispatcher.forward(request, response);
-//					
-//		} else if(action.equalsIgnoreCase("tripplan")) {
-//			String ssido_code=request.getParameter("sido_code");
-//			int sido_code = Integer.parseInt(ssido_code);
-//			String scontent_type_id=request.getParameter("content_type_id");
-//			int content_type_id = Integer.parseInt(scontent_type_id);
-//			String title=request.getParameter("title");
-//			System.out.println(sido_code+" " + content_type_id +" "+ title);
-//			
-//			request.setAttribute("list", attractionService.attractionList(sido_code, content_type_id, title));
-//			
-//			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/tripplan.jsp");
-//			requestDispatcher.forward(request, response);
-//					
-//		} 
-//
-//		
-//		
-//	}
-
 }
