@@ -44,8 +44,9 @@
           <span class = "fs-2 border-bottom border-5 border-dark border-opacity-50">나만의 여행 계획</span>
         </div>
         <!-- 관광지 검색 start -->
-        <form class="d-flex my-3" action="${root}/attraction/searchPlan" method="post" >
-        	<input type="hidden" name="action" value="tripplan">
+        <%-- <form id="search" class="d-flex my-3" action="${root}/attraction/searchPlan" method="post" > --%>
+        <form id="search" class="d-flex my-3" method="post" >
+        	<!-- <input type="hidden" name="action" value="tripplan"> -->
           <select id="search-area" class="form-select me-2" name="ssido_code">
             <option value="0" selected>검색 할 지역 선택</option>
           </select>
@@ -68,7 +69,7 @@
             placeholder="검색어"
             aria-label="검색어"
           />
-          <button id="btn-search" class="btn btn-outline-success w-25" type="submit">검색</button>
+          <button id="btn-search" class="btn btn-outline-success w-25" type="submit" onclick="plan();return false;">검색</button>
         </form>
         
         
@@ -87,11 +88,8 @@
         <div id="tboard">
 		  <h1>관광지 목록</h1>
 		 		<table class="table table-striped" >
-		         <col width="20%"><col width="20%"><col width="20%"><col width="20%"><col width="20%">
-		         <tr>
-		             <th>이미지</th><th>이름</th><th>주소</th><th>위도</th><th>경도</th>
-		         </tr>
-		         <c:forEach var="area" items="${list}">
+		         
+		         <%-- <c:forEach var="area" items="${list}">
 		             <tr class="items">
 		                 <td><img src='${area.first_image}' width="100px"/></td>
 		                 <td>${area.title}</td>
@@ -100,7 +98,7 @@
 		                 <td>${area.longitude}</td>
 		                 
 		             </tr>
-		         </c:forEach>
+		         </c:forEach> --%>
 		         </table>
 		 </div>
 		 <!-- 관광지 검색 test용 -->
@@ -162,7 +160,52 @@
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-	
+  <script>
+    function plan(){
+        var formData = $("#search").serialize();
+        console.log(formData);
+
+        $.ajax({
+            cache : false,
+            url : "${root}/attraction/searchPlan", // 요기에
+            type : 'POST', 
+            data : formData, 
+            contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+            success : function(data) {
+            	$(".table").children().remove();
+            	console.log($(".table"));
+            	console.log(data);
+                console.log("성공");
+                var t = ''
+                t += '<col width="20%"><col width="20%"><col width="20%"><col width="20%"><col width="20%">';
+                t += '<tr>';
+                t += '<th>이미지</th><th>이름</th><th>주소</th><th>위도</th><th>경도</th>';
+                t += '</tr>';
+		        
+                $(".table").append(t);
+                $.each(data, function(index, data){
+                	// console.log(data);
+                	// console.log(data.title);
+                	 var body = '';
+                	 body += '<tr class="items">';
+                	 body += '<td><img src='+ data.first_image + ' width="100px"/></td>';
+                	 body += '<td>'+ data.title + '</td>';
+                	 body += '<td>' + data.addr1 + '</td>';
+                	 body += '<td>' + data.latitude + '</td>';
+                	 body += '<td>' + data.longitude + '</td>';
+                	 body += '</tr>';
+                	 
+                	 $(".table").append(body);
+                })
+                makeList();
+            }, // success 
+    
+            error : function(xhr, status) {
+            	console.log("실패");
+            }
+        }); // $.ajax */
+    }
+</script>
 
   <!-- Vendor JS Files -->
   <script src="${root}/resources/vendor/purecounter/purecounter_vanilla.js"></script>
@@ -206,19 +249,25 @@
     }
 
     window.onload = function() {
-  	  makeList();
+  	  // makeList();
     }
 
     var positions; // marker 배열.
-    
-    if(sessionStorage.getItem("planPositions") === null) {
+    var positions2 = [];
+    var positionsCourse = []; //코스에 넣기위한 저장소
+    /* if(sessionStorage.getItem("planPositions") === null) {
     	var p = [];
     	sessionStorage.setItem("planPositions", JSON.stringify(p));
-    }
+    	sessionStorage.setItem("planPositionsMarker", JSON.stringify(p));
+    }else {
+    	positions2 = sessionStorage.getItem("planPositionsMarker");
+    	positionsCourse = sessionStorage.getItem("planPositions");
+    	console.log(positions2);
+    	console.log(positionsCourse);
+    } */
     
-    var positions2 = JSON.parse(sessionStorage.getItem("planPositions"));
-    console.log(positions2);
-    console.log(positions2.length);
+   	
+    // var positions2 = [];
     function makeList() {
   	 console.log();
       
@@ -227,6 +276,7 @@
       // positions = [];
       
       console.log(trips.length);
+      console.log("queryselector 설정")
       
       itemAdd();
     }
@@ -261,13 +311,17 @@
                 newItem.innerHTML += '<p>' + title + '</p><p>' + addr + '</p>';
                 planitem.appendChild(newItem);
                 console.log(newItem);
-
+				
+                positionsCourse.push({
+                	"title":  title,
+                	"addr":  addr,
+                });
                 
                 var markerInfo = {
                         title:  title,
                         latlng: new kakao.maps.LatLng(lat, lng),
                       };
-                positions2.push(JSON.stringify(markerInfo));
+                positions2.push(markerInfo);
                 console.log("positions2 길이: " + positions2.length);
                 console.log("positions2: " + positions2	);
             })
@@ -276,7 +330,8 @@
 
     const courseBtn = document.getElementById("courseBtn");
     courseBtn.addEventListener("click", function (event) {
-    	sessionStorage.setItem("planPositions", positions2); // 다시 sessionStorage에 넣어줌
+    	sessionStorage.setItem("planPositions", positionsCourse); // 다시 sessionStorage에 넣어줌
+    	sessionStorage.setItem("planPositionsMarker", positions2); // 다시 sessionStorage에 넣어줌
         addCourse();
     })
 
