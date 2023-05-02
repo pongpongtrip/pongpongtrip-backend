@@ -3,6 +3,7 @@ package com.enjoytrip.ws.member.model.service;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,6 +57,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void registMember(MemberDto memberDto) throws Exception {
 		memberMapper.registMember(memberDto);
+	}
+	
+	@Override
+	public MemberDto loginMember(Map<String, String> map) throws Exception {
+		return memberMapper.loginMember(map);
 	}
 
 }

@@ -21,4 +21,10 @@
 		values (#{userId}, #{userName}, #{userPassword}, now(), 0)
 	</insert>
 	
+	<select id="loginMember" parameterType="map" resultMap="member">
+		select user_id, user_name
+		from members
+		where user_id = #{userId} and user_password = #{userPassword}
+	</select>
+	
 </mapper>

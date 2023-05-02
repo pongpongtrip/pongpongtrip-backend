@@ -23,5 +23,6 @@ public interface MemberMapper {
 	
 	//여기부터 만듬 - sooyeon
 	void registMember(MemberDto memberDto) throws SQLException;
+	MemberDto loginMember(Map<String, String> map) throws SQLException;
 	
 }

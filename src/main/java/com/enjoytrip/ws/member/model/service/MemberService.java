@@ -3,6 +3,7 @@ package com.enjoytrip.ws.member.model.service;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.enjoytrip.ws.member.model.MemberDto;
 
@@ -17,4 +18,5 @@ public interface MemberService {
 	
 	//여기부터 만듬 - sooyeon
 	void registMember(MemberDto memberDto) throws Exception;
+	MemberDto loginMember(Map<String, String> map) throws Exception;
 }

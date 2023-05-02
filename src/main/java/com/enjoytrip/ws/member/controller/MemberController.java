@@ -60,6 +60,7 @@ public class MemberController {
 			return "error/error";
 		}
 	}
+
 	
 	@GetMapping("/login")
 	public String login() {
@@ -69,13 +70,16 @@ public class MemberController {
 	@PostMapping("/login")
 	public String login(@RequestParam Map<String, String> map, @RequestParam(name = "saveid", required = false) String saveid, Model model, HttpSession session, HttpServletResponse response) {
 		logger.debug("login map : {}", map);
+		System.out.println("요기이ㅣ잉");
+		System.out.println(map);
+		
 		try {
 			MemberDto memberDto = memberService.loginMember(map);
 			if(memberDto != null) {
 				session.setAttribute("userinfo", memberDto);
-				
-				Cookie cookie = new Cookie("ssafy_id", map.get("userid"));
-				cookie.setPath("/board");
+
+				Cookie cookie = new Cookie("enjoytrip_id", map.get("userId"));
+				cookie.setPath("/attraction"); //여기 나중에 수정
 				if("ok".equals(saveid)) {
 					cookie.setMaxAge(60*60*24*365*40);
 				} else {
@@ -85,7 +89,7 @@ public class MemberController {
 				return "redirect:/";
 			} else {
 				model.addAttribute("msg", "아이디 또는 비밀번호 확인 후 다시 로그인하세요!");
-				return "user/login";
+				return "member/login";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -10,6 +10,10 @@ public class MemberDto {
 	
 	
 	
+	public MemberDto() {
+		super();
+	}
+	
 	public MemberDto(String userId, String userName, String userPassword, String joinDate, Integer admin) {
 		super();
 		this.userId = userId;
@@ -18,6 +22,7 @@ public class MemberDto {
 		this.joinDate = joinDate;
 		this.admin = admin;
 	}
+
 
 	public String getUserId() {
 		return userId;
@@ -55,7 +60,7 @@ public class MemberDto {
 		return admin;
 	}
 
-	public void setAdmin(Integer admin) {
+	public void setAdmin(int admin) {
 		this.admin = admin;
 	}
 
