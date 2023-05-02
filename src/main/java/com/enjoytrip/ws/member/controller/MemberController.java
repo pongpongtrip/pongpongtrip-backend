@@ -23,7 +23,7 @@ import com.enjoytrip.ws.member.model.service.MemberService;
 
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/member")
 public class MemberController {
 	
 	private final Logger logger = LoggerFactory.getLogger(MemberController.class);
@@ -35,9 +35,9 @@ public class MemberController {
 		this.memberService = memberService;
 	}
 
-	@GetMapping("/join")
+	@GetMapping("/regist")
 	public String join() {
-		return "user/join";
+		return "member/regist";
 	}
 	
 	@GetMapping("/{userid}")
@@ -48,12 +48,12 @@ public class MemberController {
 		return cnt + "";
 	}
 	
-	@PostMapping("/join")
+	@PostMapping("/regist")
 	public String join(MemberDto memberDto, Model model) {
 		logger.debug("memberDto info : {}", memberDto);
 		try {
-			memberService.joinMember(memberDto);
-			return "redirect:/user/login";
+			memberService.registMember(memberDto);
+			return "redirect:/member/login";
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", "회원 가입 중 문제 발생!!!");
@@ -63,7 +63,7 @@ public class MemberController {
 	
 	@GetMapping("/login")
 	public String login() {
-		return "user/login";
+		return "member/login";
 	}
 	
 	@PostMapping("/login")

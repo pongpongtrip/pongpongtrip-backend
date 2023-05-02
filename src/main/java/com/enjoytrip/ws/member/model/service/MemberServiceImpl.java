@@ -12,8 +12,6 @@ import com.enjoytrip.ws.member.model.mapper.MemberMapper;
 
 @Service
 public class MemberServiceImpl implements MemberService {
-
-//	private static  IMemberService mservice=new MemberServiceImpl();
 	
 	private MemberMapper memberMapper;
 	
@@ -22,9 +20,7 @@ public class MemberServiceImpl implements MemberService {
 		super();
 		this.memberMapper = memberMapper;
 	}
-//	public static IMemberService getInstance() {
-//		return mservice;
-//	}
+
 	
 
 	@Override
@@ -53,6 +49,13 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public boolean updateMember(MemberDto dto) throws SQLException {
 		return memberMapper.updateMember(dto);
+	}
+
+
+	//여기부터 만듬 - sooyeon
+	@Override
+	public void registMember(MemberDto memberDto) throws Exception {
+		memberMapper.registMember(memberDto);
 	}
 
 }

@@ -1,79 +1,69 @@
 package com.enjoytrip.ws.member.model;
 
 public class MemberDto {
-	private String user_name;
-	private String user_id;
-	private String user_password;
-	private String join_date;
-	private boolean admin;
-	private boolean dflag;
-	public MemberDto( String id, String name, String password) {
+	
+	private String userId;
+	private String userName;
+	private String userPassword;
+	private String joinDate;
+	private Integer admin;
+	
+	
+	
+	public MemberDto(String userId, String userName, String userPassword, String joinDate, Integer admin) {
 		super();
-		this.user_name = name;
-		this.user_id = id;
-		this.user_password = password;
-	}
-	public MemberDto( String id, String name, String password, boolean admin) {
-		super();
-		this.user_name = name;
-		this.user_id = id;
-		this.user_password = password;
+		this.userId = userId;
+		this.userName = userName;
+		this.userPassword = userPassword;
+		this.joinDate = joinDate;
 		this.admin = admin;
 	}
-	public MemberDto(String id, String name,  String password, String joinDate, boolean admin, boolean dflag) {
-		super();
-		this.user_name = name;
-		this.user_id = id;
-		this.user_password = password;
-		this.join_date = joinDate;
-		this.admin = admin;
+
+	public String getUserId() {
+		return userId;
 	}
-	public MemberDto(String id, String name, boolean admin) {
-		super();
-		this.user_id = id;
-		this.user_name = name;
-		this.admin = admin;
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-	public MemberDto(String id, String password) {
-		super();
-		this.user_id = id;
-		this.user_password = password;
+
+	public String getUserName() {
+		return userName;
 	}
-	public String getName() {
-		return user_name;
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
-	public void setName(String name) {
-		this.user_name = name;
+
+	public String getUserPassword() {
+		return userPassword;
 	}
-	public String getId() {
-		return user_id;
+
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
 	}
-	public void setId(String id) {
-		this.user_id = id;
-	}
-	public String getPassword() {
-		return user_password;
-	}
-	public void setPassword(String password) {
-		this.user_password = password;
-	}
+
 	public String getJoinDate() {
-		return join_date;
+		return joinDate;
 	}
+
 	public void setJoinDate(String joinDate) {
-		this.join_date = joinDate;
+		this.joinDate = joinDate;
 	}
-	public boolean isAdmin() {
+
+	public int isAdmin() {
 		return admin;
 	}
-	public void setAdmin(boolean admin) {
+
+	public void setAdmin(Integer admin) {
 		this.admin = admin;
 	}
-	public boolean isDflag() {
-		return dflag;
+
+	@Override
+	public String toString() {
+		return "MemberDto [userId=" + userId + ", userName=" + userName + ", userPassword=" + userPassword
+				+ ", joinDate=" + joinDate + ", admin=" + admin + "]";
 	}
-	public void setDflag(boolean dflag) {
-		this.dflag = dflag;
-	}
+
 	
 }

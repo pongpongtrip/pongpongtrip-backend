@@ -30,14 +30,14 @@
             <ul>
                 <c:if test="${not empty sessionScope.login}">
                 	<c:if test="${login.admin eq true}">
-                		<li><a type="button" class="btn " id ="adminBtn" href="${root}/member?action=adminPage">관리자 페이지</a></li>
+                		<li><a type="button" class="btn " id ="adminBtn" href="${root}/member/adminPage">관리자 페이지</a></li>
 	                </c:if>
 	                <li><a type="button" class="btn " id ="userinfoBtn" href="${root}/member?action=memberInfo&userId=${login.id}">회원 정보</a></li>
-	                <li><a type="button" class="btn " id ="logoutBtn" href="${root}/member?action=logout">로그아웃</a></li>
+	                <li><a type="button" class="btn " id ="logoutBtn" href="${root}/member/logout">로그아웃</a></li>
 				</c:if>
 				<c:if test="${empty sessionScope.login}">
-					<li><a type="button" class="btn " href="${root}/member?action=login">로그인</a></li>
-                	<li><a type="button" class="btn " href="${root}/member?action=regist">회원가입</a></li>
+					<li><a type="button" class="btn " href="${root}/member/login">로그인</a></li>
+                	<li><a type="button" class="btn " href="${root}/member/regist">회원가입</a></li>
 				
 				</c:if>
 				

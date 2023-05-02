@@ -14,4 +14,7 @@ public interface MemberService {
 	List<MemberDto> memberList() throws SQLException;
 	boolean deleteMember(String id) throws SQLException;
 	boolean updateMember(MemberDto dto)throws SQLException;
+	
+	//여기부터 만듬 - sooyeon
+	void registMember(MemberDto memberDto) throws Exception;
 }
