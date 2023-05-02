@@ -30,7 +30,7 @@
             <ul>
                 <c:if test="${not empty userinfo}">
                 	<c:if test="${userinfo.userId eq 'admin'}">
-                		<li><a type="button" class="btn " id ="adminBtn" href="${root}/member/adminPage">관리자 페이지</a></li>
+                		<li><a type="button" class="btn " id ="adminBtn" href="${root}/member/list">관리자 페이지</a></li>
 	                </c:if>
 	                <li><a type="button" class="btn " id ="userinfoBtn" href="${root}/member/member-info">회원 정보</a></li>
 	                <li><a type="button" class="btn " id ="logoutBtn" href="${root}/member/logout">로그아웃</a></li>

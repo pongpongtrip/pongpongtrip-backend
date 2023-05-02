@@ -9,12 +9,6 @@ import com.enjoytrip.ws.member.model.MemberDto;
 
 
 public interface MemberService {
-	void registry(MemberDto dto) throws SQLException;
-	MemberDto login(MemberDto dto) throws SQLException;
-	MemberDto info(String id) throws SQLException;
-	List<MemberDto> memberList() throws SQLException;
-	boolean deleteMember(String id) throws SQLException;
-	boolean updateMember(MemberDto dto)throws SQLException;
 	
 	//여기부터 만듬 - sooyeon
 	void registMember(MemberDto memberDto) throws Exception;
@@ -22,4 +16,13 @@ public interface MemberService {
 	MemberDto getMemberInfo(String userId) throws Exception;
 	void memberUpdate(Map<String, String> map) throws Exception;
 	void memberDelete(String userId) throws Exception;
+	
+	//Admin
+//	List<MemberDto> memberList() throws SQLException;
+	
+	//하이쌤코드
+	List<MemberDto> listMember(Map<String, Object> map) throws Exception;
+	MemberDto getMember(String userId) throws Exception;
+	void updateMemberAdmin(MemberDto memberDto) throws Exception;
+	void deleteMemberAdmin(String userId) throws Exception;
 }

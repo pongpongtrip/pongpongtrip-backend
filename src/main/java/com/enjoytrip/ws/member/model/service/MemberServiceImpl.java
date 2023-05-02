@@ -22,36 +22,6 @@ public class MemberServiceImpl implements MemberService {
 		this.memberMapper = memberMapper;
 	}
 
-	
-
-	@Override
-	public void registry(MemberDto dto) throws SQLException {
-		memberMapper.joinMember(dto);
-	}
-
-	@Override
-	public MemberDto login(MemberDto dto) throws SQLException {
-		return memberMapper.loginMember(dto);
-	}
-	
-	@Override
-	public MemberDto info(String id) {
-		// return memberMapper.info(id);
-		return null;
-	}
-	@Override
-	public List<MemberDto> memberList() throws SQLException {
-		return memberMapper.listMember();
-	}
-	@Override
-	public boolean deleteMember(String id) throws SQLException {
-		return memberMapper.deleteMember(id);
-	}
-	@Override
-	public boolean updateMember(MemberDto dto) throws SQLException {
-		return memberMapper.updateMember(dto);
-	}
-
 
 	//여기부터 만듬 - sooyeon
 	@Override
@@ -84,5 +54,43 @@ public class MemberServiceImpl implements MemberService {
 		memberMapper.memberDelete(userId);
 		
 	}
+	
+	
+	//Admin
+	/*
+	 * @Override public List<MemberDto> memberList() throws SQLException { return
+	 * memberMapper.listMember(); }
+	 */
+
+
+	@Override
+	public List<MemberDto> listMember(Map<String, Object> map) throws Exception {
+		return memberMapper.listMember(map);
+	}
+
+
+
+	@Override
+	public MemberDto getMember(String userId) throws Exception {
+		return memberMapper.getMember(userId);
+	}
+
+
+
+	@Override
+	public void updateMemberAdmin(MemberDto memberDto) throws Exception {
+		memberMapper.updateMemberAdmin(memberDto);
+		
+	}
+
+
+
+	@Override
+	public void deleteMemberAdmin(String userId) throws Exception {
+		memberMapper.deleteMemberAdmin(userId);
+		
+	}
+	//--여기까지
+
 
 }

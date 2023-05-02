@@ -5,7 +5,7 @@
 
 <head>
   
-<%@ include file="head.jsp" %>
+<%@ include file="../head.jsp" %>
 
     <style>
         .container{
@@ -50,7 +50,7 @@
 <body>
 
   <!-- ======= Header ======= -->
-  <%@ include file="header.jsp" %>
+  <%@ include file="../header.jsp" %>
 <c:set value="${pageContext.request.contextPath}" var="root"></c:set>
   
   <main id="main">
@@ -67,28 +67,28 @@
 		         </thead>
 		         <tbody>
 		         <c:forEach var="member" items="${members}" varStatus="vs">
-		             <tr id="${member.id }" onclick="memberInfo('${member.id}')">
+		             <tr id="${member.userId }" onclick="memberInfo('${member.userId}')">
 			                 <td>${vs.count}</td>
-			                 <td>${member.id}</td>
-			                 <td>${member.name}</td>
-			                 <c:if test="${member.admin eq true}">
+			                 <td>${member.userId}</td>
+			                 <td>${member.userName}</td>
+			                 <c:if test="${member.userId eq 'admin'}">
 		                    	<td>관리자</td>
 			                </c:if>
-			                <c:if test="${member.admin eq false}">
+			                <c:if test="${member.userId ne 'admin'}">
 		                    	<td>일반 회원</td>
 			                </c:if>
 		               <td>
 		               	<form style="display:inline" action="${root}/member" method="post">
 		                      <input type="hidden" name="action" value="update"/>
 		                      <input type="hidden" name="mode" value="1"/>
-		                      <input type="hidden" name="userId" value="${member.id}"/>
+		                      <input type="hidden" name="userId" value="${member.userId}"/>
 		                     <button class="btn btn-outline-primary" type="submit" >수정</button>
 		                 </form>
 		               
 		                <form style="display:inline" action="${root}/member" method="post">
 		                      <input type="hidden" name="action" value="delete"/>
 		                      <input type="hidden" name="mode" value="1"/>
-		                      <input type="hidden" name="userId" value="${member.id}"/>
+		                      <input type="hidden" name="userId" value="${member.userId}"/>
 		                     <button class="btn btn-danger" type="submit" >삭제</button>
 		                 </form>
 		                </td>

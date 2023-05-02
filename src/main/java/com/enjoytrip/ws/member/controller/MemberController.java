@@ -110,11 +110,6 @@ public class MemberController {
 		return "member/member-info";
 	}
 	
-	@GetMapping("/list")
-	public String list() {
-		return "redirect:/assets/list.html";
-	}
-	
 	@GetMapping("/update")
 	public String memberupdate(HttpSession session, Model model) throws Exception {
 		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
@@ -132,7 +127,7 @@ public class MemberController {
 		return "member/memberupdate";
 	}
 	
-	@GetMapping(value = "/delete")
+	@GetMapping("/delete")
 	public String memberdelete(HttpSession session, Model model) throws Exception {
 		logger.info("Welcome memberdelete!");
 		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
@@ -140,6 +135,11 @@ public class MemberController {
 		session.invalidate();
 		//나중에 게시판 구현시, 유저가 작성한 게시글 삭제 -> 탈퇴 해야함
 		return "redirect:/";
+	}
+	
+	@GetMapping("/list")
+	public String list() {
+		return "redirect:/resources/assets/list.html";
 	}
 
 

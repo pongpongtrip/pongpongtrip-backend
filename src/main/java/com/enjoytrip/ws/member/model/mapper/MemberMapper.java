@@ -16,10 +16,8 @@ public interface MemberMapper {
 	MemberDto loginMember(MemberDto dto) throws SQLException;
 	
 	/* Admin */
-	List<MemberDto> listMember() throws SQLException;
-	MemberDto getMember(String userId) throws SQLException;
-	boolean updateMember(MemberDto memberDto) throws SQLException;
-	boolean deleteMember(String userId) throws SQLException;
+	
+	
 	
 	//여기부터 만듬 - sooyeon
 	void registMember(MemberDto memberDto) throws SQLException;
@@ -27,5 +25,11 @@ public interface MemberMapper {
 	MemberDto getMemberInfo(String userId) throws SQLException;
 	void memberUpdate(Map<String, String> map) throws SQLException;
 	void memberDelete(String userId) throws SQLException;
+	
+	//Admin
+	List<MemberDto> listMember(Map<String, Object> map) throws SQLException;
+	MemberDto getMember(String userId) throws SQLException;
+	boolean updateMemberAdmin(MemberDto memberDto) throws SQLException;
+	boolean deleteMemberAdmin(String userId) throws SQLException;
 	
 }
