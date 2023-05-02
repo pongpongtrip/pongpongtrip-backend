@@ -4,10 +4,10 @@
 <html>
 <head>
 
-<%@ include file="../attraction/head.jsp" %>
+<%@ include file="../head.jsp" %>
 </head>
 <body>
-<%@ include file="../attraction/header.jsp" %>
+<%@ include file="../header.jsp" %>
 <c:set value="${pageContext.request.contextPath}" var="root"></c:set>
 
 <main id="main" class="pt-5">
