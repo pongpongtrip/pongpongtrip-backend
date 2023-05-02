@@ -5,7 +5,7 @@
 
 <head>
   
-<%@ include file="head.jsp" %>
+<%@ include file="../head.jsp" %>
   <style>
     #overlay {
         position: absolute;
@@ -33,7 +33,7 @@
 
 <body>
 
-  <%@ include file="header.jsp" %>
+  <%@ include file="../header.jsp" %>
 
   
   <main id="main">
@@ -179,10 +179,7 @@
 
   <!-- 키 js 로딩 -->
   <script src="${root}/resources/js/key.js"></script>
-  <script
-      type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2223d2f22a341325eecde67a3e4ec69f&libraries=services,clusterer,drawing"
-    ></script>
+  
     <script>
  // index page 로딩 후 전국의 시도 설정.
     let areaUrl =
@@ -213,7 +210,15 @@
     }
 
     var positions; // marker 배열.
-    var positions2 = [];
+    
+    if(sessionStorage.getItem("planPositions") === null) {
+    	var p = [];
+    	sessionStorage.setItem("planPositions", JSON.stringify(p));
+    }
+    
+    var positions2 = JSON.parse(sessionStorage.getItem("planPositions"));
+    console.log(positions2);
+    console.log(positions2.length);
     function makeList() {
   	 console.log();
       
@@ -223,42 +228,9 @@
       
       console.log(trips.length);
       
-      
-      /* <c:forEach var="area" items="${list}">
-      	  var markerInfo = {
-              title:  '<c:out value="${area.title}"/>',
-              latlng: new kakao.maps.LatLng('<c:out value="${area.latitude}"/>','<c:out value="${area.longitude}"/>'),
-            };
-            positions.push(markerInfo);
-      	  
-  
-      </c:forEach> */
-      /* console.log(trips); */
-      // displayMarker();
       itemAdd();
     }
 
-      
-     /*  function makeList(data) {
-        document.querySelector("table").setAttribute("style", "display: ;");
-        let trips = data.response.body.items.item;
-        let tripList = ``;
-        positions = [];
-        trips.forEach((area) => {
-          tripList += `
-            <tr class="items">
-              <td><img src="${area.firstimage}" width="100px"></td>
-              <td>${area.title}</td>
-              <td>${area.addr1} ${area.addr2}</td>
-              <td>${area.mapy}</td>
-              <td>${area.mapx}</td>
-            </tr>
-          `;
-
-        });
-        document.getElementById("trip-list").innerHTML = tripList;
-        itemAdd();
-      } */
 
       // 카카오지도
       var mapContainer = document.getElementById("map"), // 지도를 표시할 div
@@ -295,13 +267,16 @@
                         title:  title,
                         latlng: new kakao.maps.LatLng(lat, lng),
                       };
-                positions2.push(markerInfo);
+                positions2.push(JSON.stringify(markerInfo));
+                console.log("positions2 길이: " + positions2.length);
+                console.log("positions2: " + positions2	);
             })
         })
     }
 
     const courseBtn = document.getElementById("courseBtn");
     courseBtn.addEventListener("click", function (event) {
+    	sessionStorage.setItem("planPositions", positions2); // 다시 sessionStorage에 넣어줌
         addCourse();
     })
 

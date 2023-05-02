@@ -7,13 +7,13 @@
 <head>
 <c:set var="root" value="${pageContext.request.contextPath}" ></c:set>
 
-  <%@ include file="head.jsp" %>
+  <%@ include file="../head.jsp" %>
   <%-- <%@ include file="src/main/webapp/WEB-INF/views/head.jsp" %> --%>
   
 </head>
 
 <body>
-<%@ include file="header.jsp" %>
+<%@ include file="../header.jsp" %>
 
 
   
