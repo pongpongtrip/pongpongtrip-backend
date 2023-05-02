@@ -10,7 +10,10 @@
   <meta content="" name="description">
   <meta content="" name="keywords">
   
- 
+ 	<script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=38eedb9483c38e015735b4a1e007979b&libraries=services,clusterer,drawing"
+    ></script>
   
   <!-- Favicons -->
   <link href="resources/img/favicon.png" rel="icon">
