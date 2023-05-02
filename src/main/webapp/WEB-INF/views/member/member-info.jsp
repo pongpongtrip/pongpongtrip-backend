@@ -5,7 +5,7 @@
 
 <head>
   
-<%@ include file="head.jsp" %>
+<%@ include file="../head.jsp" %>
 
     <style>
         .container{
@@ -33,7 +33,7 @@
 </head>
 
 <body>
-<%@ include file="header.jsp" %>
+<%@ include file="../header.jsp" %>
 
   
   <main id="main">
@@ -47,7 +47,7 @@
                     <p>아이디</p>
                 </div>
                 <div class="m-3  pt-3 infoA">
-                    <p>${user.id }</p>
+                    <p>${userinfo.userId }</p>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -55,7 +55,7 @@
                     <p>회원 이름</p>
                 </div>
                 <div class="m-3 pt-3 infoA">
-                    <p>${user.name }</p>
+                    <p>${userinfo.userName }</p>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -63,71 +63,44 @@
                     <p>회원 등급</p>
                 </div>
                 <div class="m-3 pt-3 infoA">
-                	<c:if test="${user.admin eq true}">
+                	<c:if test="${userinfo.userId eq 'admin'}">
                     	<p>관리자</p>
 	                </c:if>
-	                <c:if test="${user.admin eq false}">
+	                <c:if test="${userinfo.userId ne 'admin'}">
                     	<p>일반 회원</p>
 	                </c:if>
                 </div>
             </div>
-            
           </div>
         </div>
         <div class="row p-4 ">
           <div class="col-xxl-10"></div>
           <div class="col-xxl-2 d-flex align-items-center justify-content-around" >
             <c:if test="${user.id eq login.id}">
-	          <form style="display: inline" action="${root}/member" method="post">
-				    <input type="hidden" name="action" value="update"/>
-			        <input type="hidden" name="userId" value="${user.id}"/>
-				    <button type="submit" class="btn btn-outline-primary mb-2">회원 정보 수정</button>
-				</form>
-			
+<%-- 	          <form style="display: inline" action="${root}/member" method="post">
+			        <input type="hidden" name="userId" value="${userinfo.userId}"/>
+				    <button type="button" id="btn-memberupdate" class="btn btn-outline-primary mb-2">회원 정보 수정</button>
+				</form> --%>
+
+				
+				<a type="button" class="btn" href="${root}/member/update">
+					<button type="button" id="btn-memberupdate" class="btn btn-outline-primary mb-2">
+					회원 정보 수정
+					</button>
+				</a>
+				
+<%-- 				
                	<form style="display: inline" action="${root}/member" method="post">
-				    <input type="hidden" name="action" value="delete"/>
-	                <input type="hidden" name="userId" value="${user.id}"/>
-				    <button type="submit" class="btn btn-danger mb-2">회원 탈퇴</button>
-				</form>
+	                <input type="hidden" name="userId" value="${userinfo.userId}"/>
+				    <button type="button" id="btn-memberdelete" class="btn btn-danger mb-2">회원 탈퇴</button>
+				</form> --%>
+				<a type="button" class="btn" href="${root}/member/delete">
+					<button type="button" id="btn-memberdelete" class="btn btn-danger mb-2">회원 탈퇴</button>
+				</a>
+				
             </c:if>
-            
-            
          </div>
         </div>
-
-        <div class="row ">
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
-                <div class="row">
-                    <div class="col-md-4 col-sm-12">
-                        <div class="card-body">
-                            <div class="card h-100 m-3">
-                                <img src="assets/img/01.jpg" class="rounded img-fluid hover-grow" alt="...">
-                            
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-12">
-                        <div class="card-body">
-                            <div class="card h-100 m-3">
-                                <img src="assets/img/02.jpg" class="rounded img-fluid hover-grow" alt="...">
-                            
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-12">
-                        <div class="card-body">
-                            <div class="card h-100 m-3">
-                                <img src="assets/img/03.jpg" class="rounded img-fluid hover-grow" alt="...">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-1"></div>
-      </div>
-    
-  
   </main>
   <!-- End #main -->
     
@@ -189,8 +162,5 @@
   <script src="resources/js/main.js"></script>
   
   <!-- 키 js 로딩 -->
-
-    </body>
-    
-    </div>
+</body>
 </html>

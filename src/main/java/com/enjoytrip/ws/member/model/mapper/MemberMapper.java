@@ -24,5 +24,8 @@ public interface MemberMapper {
 	//여기부터 만듬 - sooyeon
 	void registMember(MemberDto memberDto) throws SQLException;
 	MemberDto loginMember(Map<String, String> map) throws SQLException;
+	MemberDto getMemberInfo(String userId) throws SQLException;
+	void memberUpdate(Map<String, String> map) throws SQLException;
+	void memberDelete(String userId) throws SQLException;
 	
 }

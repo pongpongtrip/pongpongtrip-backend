@@ -19,4 +19,7 @@ public interface MemberService {
 	//여기부터 만듬 - sooyeon
 	void registMember(MemberDto memberDto) throws Exception;
 	MemberDto loginMember(Map<String, String> map) throws Exception;
+	MemberDto getMemberInfo(String userId) throws Exception;
+	void memberUpdate(Map<String, String> map) throws Exception;
+	void memberDelete(String userId) throws Exception;
 }

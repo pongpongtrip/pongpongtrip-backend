@@ -26,5 +26,22 @@
 		from members
 		where user_id = #{userId} and user_password = #{userPassword}
 	</select>
+
+	<select id="getMemberInfo" parameterType="memberDto" resultMap="memberAll">
+		select user_id, user_name, user_password, join_date
+		from members
+		where user_id = #{userId}
+	</select>
+	
+	<update id="memberUpdate" parameterType="map">
+		update members
+		set user_name = #{userName}, user_password=#{userPassword}
+		where user_id = #{userId}
+	</update>
+	
+	<delete id="memberDelete" parameterType="String">
+		delete from members
+		where user_id = #{userId}
+	</delete>
 	
 </mapper>

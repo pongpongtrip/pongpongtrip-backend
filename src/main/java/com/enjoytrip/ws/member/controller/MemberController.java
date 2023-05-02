@@ -3,6 +3,7 @@ package com.enjoytrip.ws.member.controller;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -40,6 +41,7 @@ public class MemberController {
 		return "member/regist";
 	}
 	
+	/*
 	@GetMapping("/{userid}")
 	@ResponseBody
 	public String idCheck(@PathVariable("userid") String userId) throws Exception {
@@ -47,6 +49,7 @@ public class MemberController {
 		int cnt = memberService.idCheck(userId);
 		return cnt + "";
 	}
+	*/
 	
 	@PostMapping("/regist")
 	public String join(MemberDto memberDto, Model model) {
@@ -70,8 +73,6 @@ public class MemberController {
 	@PostMapping("/login")
 	public String login(@RequestParam Map<String, String> map, @RequestParam(name = "saveid", required = false) String saveid, Model model, HttpSession session, HttpServletResponse response) {
 		logger.debug("login map : {}", map);
-		System.out.println("요기이ㅣ잉");
-		System.out.println(map);
 		
 		try {
 			MemberDto memberDto = memberService.loginMember(map);
@@ -104,9 +105,43 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	@GetMapping("/member-info")
+	public String memberInfo() {
+		return "member/member-info";
+	}
+	
 	@GetMapping("/list")
 	public String list() {
 		return "redirect:/assets/list.html";
 	}
+	
+	@GetMapping("/update")
+	public String memberupdate(HttpSession session, Model model) throws Exception {
+		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
+		model.addAttribute("memberinfo",memberService.getMemberInfo(memberDto.getUserId()));
+		return "member/memberupdate";
+	}
+	
+	@PostMapping("/update")
+	public String memberupdateaf(@RequestParam Map<String, String> map, Model model, HttpServletRequest rq) throws Exception {
+		logger.info("Welcome userupdateaf! The client map is {}.",map);
+		memberService.memberUpdate(map);
+		HttpSession session = rq.getSession();
+		session.setAttribute("userinfo", memberService.loginMember(map));
+		model.addAttribute("memberinfo", memberService.getMemberInfo(map.get("userId")));
+		return "member/memberupdate";
+	}
+	
+	@GetMapping(value = "/delete")
+	public String memberdelete(HttpSession session, Model model) throws Exception {
+		logger.info("Welcome memberdelete!");
+		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
+		memberService.memberDelete(memberDto.getUserId());
+		session.invalidate();
+		//나중에 게시판 구현시, 유저가 작성한 게시글 삭제 -> 탈퇴 해야함
+		return "redirect:/";
+	}
+
+
 	
 }
