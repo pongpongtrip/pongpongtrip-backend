@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.enjoytrip.ws.attraction.model.mapper.AttractionMapper">
+
+	<resultMap type="AttractionDto" id="attraction">
+		<result column="first_image" property="first_image"/>
+		<result column="content_id" property="content_id"/>
+		<result column="title" property="title"/>
+		<result column="addr1" property="addr1"/>
+		<result column="latitude" property="latitude"/>
+		<result column="longitude" property="longitude"/>
+	</resultMap>
+
+	<select id="attractionList" parameterType="map" resultMap="attraction">
+		select first_image, content_id,title, addr1, latitude, longitude
+		from attraction_info
+		where sido_code=#{sido_code} AND content_type_id=#{content_type_id} AND title like concat('%',#{title},'%')
+
+	</select>
+
+</mapper>
