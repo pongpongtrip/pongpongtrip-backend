@@ -44,12 +44,12 @@
           <span class = "fs-2 border-bottom border-5 border-dark border-opacity-50">나만의 여행 계획</span>
         </div>
         <!-- 관광지 검색 start -->
-        <form class="d-flex my-3" action="${root}/attraction" method="post" >
+        <form class="d-flex my-3" action="${root}/attraction/searchPlan" method="post" >
         	<input type="hidden" name="action" value="tripplan">
-          <select id="search-area" class="form-select me-2" name="sido_code">
+          <select id="search-area" class="form-select me-2" name="ssido_code">
             <option value="0" selected>검색 할 지역 선택</option>
           </select>
-          <select id="search-content-id" class="form-select me-2" name="content_type_id">
+          <select id="search-content-id" class="form-select me-2" name="scontent_type_id">
             <option value="0" selected>관광지 유형</option>
             <option value="12">관광지</option>
             <option value="14">문화시설</option>
