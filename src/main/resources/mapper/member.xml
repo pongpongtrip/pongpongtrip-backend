@@ -63,7 +63,7 @@
 	<update id="updateMemberAdmin" parameterType="memberDto">
 		update members
 		<trim prefix="set" suffixOverrides=",">
-			<if test="userPwd != null">user_password = #{userPwd},</if>
+			<if test="userPassword != null">user_password = #{userPassword},</if>
 		</trim>
 		where user_id = #{userId}
 	</update>

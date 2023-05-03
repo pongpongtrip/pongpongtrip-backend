@@ -232,9 +232,7 @@
         let registerinfo = {
           userName: document.querySelector("#username").value,
           userId: document.querySelector("#userid").value,
-          userPwd: document.querySelector("#userpwd").value,
-          emailId: document.querySelector("#emailid").value,
-          emailDomain: document.querySelector("#emaildomain").value,
+          userPassword: document.querySelector("#userpwd").value,
         };
         let config = {
           method: "POST",
@@ -243,7 +241,7 @@
           },
           body: JSON.stringify(registerinfo),
         };
-        fetch(`${root}/admin/user`, config)
+        fetch(`http://localhost:9080/Enjoy_Trip3/admin/user`, config)
           .then((response) => response.json())
           .then((data) => makeList(data));
       });
@@ -269,7 +267,6 @@
       // 회원 정보 수정 보기.
       function viewModify(el) {
         let id = el.parentNode.parentNode.getAttribute("data-id");
-        console.log(id);
         document.querySelector(`#view_${id}`).setAttribute("style", "display: none;");
         document.querySelector(`#mview_${id}`).setAttribute("style", "display: ;");
       }
@@ -285,12 +282,9 @@
       function userModify(el) {
         let id = el.parentNode.parentNode.getAttribute("data-id");
         let pwd = document.querySelector(`#userpwd${id}`).value;
-        let email = document.querySelector(`#email${id}`).value.split("@");
         let modifyinfo = {
           userId: id,
-          userPwd: pwd,
-          emailId: email[0],
-          emailDomain: email[1],
+          userPassword: pwd,
         };
         let config = {
           method: "PUT",
@@ -299,7 +293,7 @@
           },
           body: JSON.stringify(modifyinfo),
         };
-        fetch(`${root}/admin/user`, config)
+        fetch(`http://localhost:9080/Enjoy_Trip3/admin/user`, config)
           .then((response) => response.json())
           .then((data) => makeList(data));
       }
@@ -314,7 +308,7 @@
               "Content-Type": "application/json",
             },
           };
-          fetch(`${root}/admin/user/${id}`, config)
+          fetch(`http://localhost:9080/Enjoy_Trip3/admin/user/${id}`, config)
             .then((response) => response.json())
             .then((data) => makeList(data));
         }
@@ -334,15 +328,14 @@
 
       // 회원 목록 tbody
       function makeList(users) {
-		console.log("ㅇ기??");
         let tbody = ``;
         users.forEach(function (user) {
           tbody += `
 						<tr id="view_${user.userId}" class="view text-center" data-id="${user.userId}" ondblclick="userView(this);">
 							<td>${user.userId}</td>
-							<td>${user.userPwd}</td>
+							<td>${user.userPassword}</td>
 							<td>${user.userName}</td>
-							<<td>${user.joinDate}</td>
+							<td>${user.joinDate}</td>
 							<td>
 								<button type="button" class="modifyViewBtn btn btn-outline-primary btn-sm" onclick="viewModify(this);">수정</button>
 								<button type="button" class="deleteBtn btn btn-outline-danger btn-sm" onclick="userDelete(this);">삭제</button>
@@ -350,7 +343,7 @@
 						</tr>
 						<tr id="mview_${user.userId}" data-id="${user.userId}" style="display: none;" class="text-center">
 							<td>${user.userId}</td>
-							<td><input type="text" name="userpwd" id="userpwd${user.userId}" value="${user.userPwd}"></td>
+							<td><input type="text" name="userpwd" id="userpwd${user.userId}" value="${user.userPassword}"></td>
 							<td>${user.userName}</td>
 							<td>${user.joinDate}</td>
 							<td>

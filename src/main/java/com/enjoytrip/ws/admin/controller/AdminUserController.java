@@ -51,7 +51,6 @@ public class AdminUserController {
 	@GetMapping(value = "/user")
 	public ResponseEntity<?> userList() {
 		logger.debug("userList call");
-		System.out.println("제발 ");
 		try {
 			List<MemberDto> list = memberService.listMember(null);
 			if(list != null && !list.isEmpty()) {
