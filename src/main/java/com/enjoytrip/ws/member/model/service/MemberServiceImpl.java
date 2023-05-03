@@ -53,6 +53,11 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 	
+	@Override
+	public int idCheck(String userId) throws Exception {
+		return memberMapper.idCheck(userId);
+	}
+	
 	
 	//Admin
 
@@ -84,6 +89,9 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 	//--Admin end
+
+
+	
 
 
 }

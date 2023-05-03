@@ -14,10 +14,9 @@ public interface MemberService {
 	MemberDto getMemberInfo(String userId) throws Exception;
 	void memberUpdate(Map<String, String> map) throws Exception;
 	void memberDelete(String userId) throws Exception;
+	int idCheck(String userId) throws Exception;
 	
 	//Admin
-	
-	//하이쌤코드
 	List<MemberDto> listMember(Map<String, Object> map) throws Exception;
 	MemberDto getMember(String userId) throws Exception;
 	void updateMemberAdmin(MemberDto memberDto) throws Exception;

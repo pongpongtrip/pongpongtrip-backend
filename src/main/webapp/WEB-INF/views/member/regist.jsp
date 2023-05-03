@@ -23,6 +23,7 @@
       <label for="user_id">사용자 아이디:</label>
       <input type="text" class="form-control" id="user_id" placeholder="아이디 입력" name="userId">
     </div>
+    <div id="idcheck-result"></div>
     <div class="mb-3 mt-3">
       <label for="user_name">사용자 이름:</label>
       <input type="text" class="form-control" id="user_name" placeholder="이름 입력" name="userName">
@@ -44,6 +45,33 @@
 <!-- <a href='./board?action=boardlist'>글목록 </a>
 <a href='./board?action=boardwrite'>글쓰기 </a> -->
 <script>
+let isUseId = false;
+document.querySelector("#user_id").addEventListener("keyup", function () {
+	let userid = this.value;
+	console.log(userid);
+	 	let resultDiv = document.querySelector("#idcheck-result");
+	 	if(userid.length < 6 || userid.length > 16) {
+		 	resultDiv.setAttribute("class", "mb-3 text-dark");
+		 	resultDiv.textContent = "아이디는 6자 이상 16자 이하 입니다.";
+		 	isUseId = false;
+	 	} else {
+		 	fetch("${root}/member/" + userid)
+   		.then(response => response.text())
+   		.then(data => {
+   			console.log(data);
+	 		if(data == 0) {
+	   			resultDiv.setAttribute("class", "mb-3 text-primary");
+       			resultDiv.textContent = userid + "는 사용할 수 있습니다.";
+       			isUseId = true;
+	 		} else {
+	   			resultDiv.setAttribute("class", "mb-3 text-danger");
+		       		resultDiv.textContent = userid + "는 사용할 수 없습니다.";
+		     		isUseId = false;
+	 		}
+		   });
+	 	}
+});
+
 	document.querySelector("#btn-regist").addEventListener("click", function () {
 		if (!document.querySelector("#user_id").value) {
 			alert("아이디 입력!!");

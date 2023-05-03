@@ -44,9 +44,13 @@
 		where user_id = #{userId}
 	</delete>
 	
-	<!-- Admin -->
+	<select id="idCheck" parameterType="String" resultType="int">
+		select count(user_id)
+		from members
+		where user_id = #{userId}
+	</select>
 	
-	<!-- 하이쌤 어드민.. -->
+	<!-- Admin start -->
 	<select id="listMember" resultMap="memberAll">
 		select user_id, user_name, user_password, join_date
 		from members
@@ -72,6 +76,7 @@
 		delete from members
 		where user_id = #{userId}
 	</delete>
+	<!-- Admin end -->
 	
 	
 </mapper>

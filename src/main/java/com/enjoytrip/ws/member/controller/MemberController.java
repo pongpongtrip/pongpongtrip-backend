@@ -41,7 +41,7 @@ public class MemberController {
 		return "member/regist";
 	}
 	
-	/*
+	
 	@GetMapping("/{userid}")
 	@ResponseBody
 	public String idCheck(@PathVariable("userid") String userId) throws Exception {
@@ -49,7 +49,7 @@ public class MemberController {
 		int cnt = memberService.idCheck(userId);
 		return cnt + "";
 	}
-	*/
+	
 	
 	@PostMapping("/regist")
 	public String join(MemberDto memberDto, Model model) {
