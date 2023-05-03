@@ -1,7 +1,5 @@
 package com.enjoytrip.ws.member.model.service;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -57,11 +55,6 @@ public class MemberServiceImpl implements MemberService {
 	
 	
 	//Admin
-	/*
-	 * @Override public List<MemberDto> memberList() throws SQLException { return
-	 * memberMapper.listMember(); }
-	 */
-
 
 	@Override
 	public List<MemberDto> listMember(Map<String, Object> map) throws Exception {
@@ -90,7 +83,7 @@ public class MemberServiceImpl implements MemberService {
 		memberMapper.deleteMemberAdmin(userId);
 		
 	}
-	//--여기까지
+	//--Admin end
 
 
 }

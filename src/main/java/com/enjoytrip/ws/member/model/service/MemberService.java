@@ -1,7 +1,5 @@
 package com.enjoytrip.ws.member.model.service;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +16,6 @@ public interface MemberService {
 	void memberDelete(String userId) throws Exception;
 	
 	//Admin
-//	List<MemberDto> memberList() throws SQLException;
 	
 	//하이쌤코드
 	List<MemberDto> listMember(Map<String, Object> map) throws Exception;
