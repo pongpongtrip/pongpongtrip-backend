@@ -5,6 +5,12 @@
 <head>
   
 <%@ include file="../head.jsp" %>
+<c:if test="${article eq null}">
+		<script>
+		alert("글이 삭제되었거나 부적절한 URL 접근입니다.");
+		location.href = "${root}/board/list";
+		</script>
+</c:if>
 </head>
 
 <body>
@@ -12,55 +18,94 @@
   <!-- ======= Header ======= -->
   <%@ include file="../header.jsp" %>
 <main id="main" class="pt-5">
- 	<div class="row pt-3 text-center text-decoration-underline" >
-       <h4>상세보기</h4>
-   </div>
-  	<div class="container p-3">
-		<table class="table">
- 		<col width="40%"><col width="60%">
- 		<tr>
- 			<th>번호</th><td><input type="text" name="article_no" readonly="readonly"
- 			width="50" value="${board.article_no }"/></td>
- 		</tr>
- 		<tr>
- 			<th>작성자</th><td><input type="text" name="user_id" readonly="readonly"
- 			width="50" value="${board.user_id }"/></td>
- 		</tr>
- 		<tr>
- 			<th>제목</th><td><input type="text" name="subject" readonly="readonly"
- 			width="50" value="${board.subject }"/></td>
- 		</tr>
- 		<tr>
- 			<th>작성일</th><td><input type="text" name="register_time" readonly="readonly"
- 			width="50" value="${board.register_time }"/></td>
- 		</tr>
- 		<tr>
- 			<th>조회수</th><td><input type="text" name="hit" readonly="readonly"
- 			width="50" value="${board.hit }"/></td>
- 		</tr>
- 		<tr>
- 			<th>내용</th><td><textarea name="content" readonly="readonly"
- 			rows="10" cols="50">${board.content }</textarea> </td>
- 		</tr>
-
- 		</table>
- 		<c:if test="${board.user_id eq login.id}">
- 		 <div style="float: left">
-			 <form style="display: inline" action="${root}/board" method="post">
-			    <input type="hidden" name="action" value="updateBoard"/>
-			    <input type="hidden" name="article_no" value="${board.article_no}"/>
-			    <button type="submit" class="btn btn-outline-primary mb-2">수정</button>
-			</form>
-			<form style="display: inline" action="${root}/board" method="post">
-			    <input type="hidden" name="action" value="delete"/>
-			    <input type="hidden" name="article_no" value="${board.article_no}"/>
-			    <button type="submit" class="btn btn-danger mb-2">삭제</button>	
-			</form>
-		 </div>
-		 </c:if>
-		 </div>
+   <div class="row justify-content-center">
+        <div class="row pt-3 text-center text-decoration-underline" >
+       		<h4>상세보기</h4>
+   		</div>
+        <div class="col-lg-8 col-md-10 col-sm-12">
+          <div class="row my-2">
+            <h2 class="text-secondary px-5">${article.articleNo}. ${article.subject}</h2>
+          </div>
+          <div class="row">
+            <div class="col-md-8">
+              <div class="clearfix align-content-center">
+                <img
+                  class="avatar me-2 float-md-start bg-light p-2"
+                  src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
+                />
+                <p>
+                  <span class="fw-bold">${article.userId}</span> <br />
+                  <span class="text-secondary fw-light"> ${article.registerTime} 조회 : ${article.hit} </span>
+                </p>
+              </div>
+            </div>
+<!--             <div class="col-md-4 align-self-center text-end">댓글 : 17</div> -->
+            <div class="divider mb-3"></div>
+            <div class="text-secondary">
+              ${article.content}
+            </div>
+            <c:if test="${!empty article.fileInfos}">
+			<div class="mt-3">
+				<ul>
+					<c:forEach var="file" items="${article.fileInfos}">
+						<%-- <li>${file.originalFile} <a href="#" class="filedown" sfolder="${file.saveFolder}" sfile="${file.saveFile}" ofile="${file.originalFile}">[다운로드]</a> --%>
+						<li>${file.originalFile} <a href="${root}/file/download/${file.saveFolder}/${file.originalFile}/${file.saveFile}">[다운로드]</a>
+					</c:forEach>
+				</ul>
+			</div>
+			</c:if>
+            <div class="divider mt-3 mb-3"></div>
+            <div class="d-flex justify-content-end">
+              <button type="button" id="btn-list" class="btn btn-outline-primary mb-3">
+                글목록
+              </button>
+              <c:if test="${userinfo.userId eq article.userId}">
+	              <button type="button" id="btn-mv-modify" class="btn btn-outline-success mb-3 ms-1">
+	                글수정
+	              </button>
+	              <button type="button" id="btn-delete" class="btn btn-outline-danger mb-3 ms-1">
+	                글삭제
+	              </button>
+	              <form id="form-no-param" method="get" action="${root}/board">
+				      <input type="hidden" id="npgno" name="pgno" value="${pgno}">
+				      <input type="hidden" id="nkey" name="key" value="${key}">
+				      <input type="hidden" id="nword" name="word" value="${word}">
+				      <input type="hidden" id="articleno" name="articleno" value="${article.articleNo}">
+				  </form>
+				  <script>
+		      		document.querySelector("#btn-mv-modify").addEventListener("click", function () {
+				    	let form = document.querySelector("#form-no-param");
+				   		form.setAttribute("action", "${root}/board/modify");
+				    	form.submit();
+				  	});
+				      
+					document.querySelector("#btn-delete").addEventListener("click", function () {
+						if(confirm("정말 삭제하시겠습니까?")) {
+							let form = document.querySelector("#form-no-param");
+				      	  	form.setAttribute("action", "${root}/board/delete");
+				          	form.submit();
+						}
+					});
+				  </script>
+              </c:if>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form id="form-param" method="get" action="">
+	      <input type="hidden" id="pgno" name="pgno" value="${pgno}">
+	      <input type="hidden" id="key" name="key" value="${key}">
+	      <input type="hidden" id="word" name="word" value="${word}">
+      </form>
 		 
 </main>
 <%-- <a href='<%=root%>/board?action=boardlist'>글목록 </a> --%>
+<script>
+	document.querySelector("#btn-list").addEventListener("click", function () {
+		  let form = document.querySelector("#form-param");
+		  form.setAttribute("action", "${root}/board/list");
+	      form.submit();
+	  });
+</script>
 </body>
 </html>

@@ -1,14 +1,17 @@
 package com.enjoytrip.ws.board.model.service;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.enjoytrip.util.PageNavigation;
 import com.enjoytrip.ws.board.model.BoardDto;
+import com.enjoytrip.ws.board.model.FileInfoDto;
 import com.enjoytrip.ws.board.model.mapper.BoardMapper;
 import com.enjoytrip.util.SizeConstant;
 
@@ -66,6 +69,48 @@ public class BoardServiceImpl implements BoardService {
 		pageNavigation.makeNavigator();
 
 		return pageNavigation;
+	}
+
+	@Override
+	@Transactional
+	public void writeArticle(BoardDto boardDto) throws Exception {
+		System.out.println("글입력 전 dto : " + boardDto);
+		boardMapper.writeArticle(boardDto);
+		System.out.println("글입력 후 dto : " + boardDto);
+		List<FileInfoDto> fileInfos = boardDto.getFileInfos();
+		if (fileInfos != null && !fileInfos.isEmpty()) {
+			boardMapper.registerFile(boardDto);
+		}
+		
+	}
+
+	@Override
+	public BoardDto getArticle(int articleNo) throws Exception {
+		return boardMapper.getArticle(articleNo);
+	}
+
+	@Override
+	public void updateHit(int articleNo) throws Exception {
+		boardMapper.updateHit(articleNo);
+		
+	}
+
+	@Override
+	public void modifyArticle(BoardDto boardDto) throws Exception {
+		boardMapper.modifyArticle(boardDto);
+		
+	}
+
+	@Override
+	public void deleteArticle(int articleNo, String path) throws Exception {
+		List<FileInfoDto> fileList = boardMapper.fileInfoList(articleNo);
+		boardMapper.deleteFile(articleNo);
+		boardMapper.deleteArticle(articleNo);
+		for(FileInfoDto fileInfoDto : fileList) {
+			File file = new File(path + File.separator + fileInfoDto.getSaveFolder() + File.separator + fileInfoDto.getSaveFile());
+			file.delete();
+		}
+		
 	}
 	
 	
