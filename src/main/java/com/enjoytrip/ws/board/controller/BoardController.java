@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,7 +64,6 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 		List<BoardDto> list = boardService.listArticle(map);
 		return list;
-
 	}
 	
 	
@@ -77,11 +77,17 @@ public class BoardController {
 //	}
 
 	@PostMapping("/write")
-	public void write(BoardDto boardDto) throws Exception {
+	public void write(@RequestBody BoardDto boardDto) throws Exception {
 		logger.debug("write boardDto : {}", boardDto);
 		//여기
+		
+		// 임시로 설정
+		MemberDto memberDto = new MemberDto("admin", "관리자", "1234", "2023-05-02", 0);
+		boardDto.setUserId(memberDto.getUserId());
+		// 원래 코드
 //		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
 //		boardDto.setUserId(memberDto.getUserId());
+		
 
 //		FileUpload 관련 설정.
 //		logger.debug("MultipartFile.isEmpty : {}", files[0].isEmpty());
