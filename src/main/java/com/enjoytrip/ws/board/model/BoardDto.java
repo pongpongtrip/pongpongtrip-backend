@@ -12,6 +12,15 @@ public class BoardDto {
 	private int hit;
 	private String registerTime;
 	private List<FileInfoDto> fileInfos;
+	
+	
+
+	public BoardDto(String userId, String subject, String content) {
+		super();
+		this.userId = userId;
+		this.subject = subject;
+		this.content = content;
+	}
 
 	public int getArticleNo() {
 		return articleNo;
