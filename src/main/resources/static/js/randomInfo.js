@@ -88,8 +88,9 @@ var positions; // marker 배열.
 function makeList(data) {
     let boxes = document.querySelectorAll(".portfolio-item.t1");
     let boxes2 = document.querySelectorAll(".portfolio-info");
-    // console.log(boxes2);
     let trips = data.response.body.items.item;
+    console.log(trips);
+
     let tripList = ``;
     let nameList = ``;
     positions = [];
