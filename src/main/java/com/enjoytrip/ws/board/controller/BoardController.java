@@ -131,7 +131,7 @@ public class BoardController {
 	}
 	
 	@GetMapping("/view")
-	public void view(BoardDto dto)
+	public BoardDto view(BoardDto dto)
 			throws Exception {
 //		logger.debug("view articleNo : {}", );
 		System.out.println(dto.getArticleNo());
@@ -149,7 +149,7 @@ public class BoardController {
 //		model.addAttribute("pgno", map.get("pgno"));
 //		model.addAttribute("key", map.get("key"));
 //		model.addAttribute("word", map.get("word"));
-//		return responseMap;
+		return boardDto;
 	}
 	
 //	@GetMapping("/view")
@@ -173,26 +173,29 @@ public class BoardController {
 //		return responseMap;
 //	}
 
-	@GetMapping("/modify")
-	public void modify(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map, Model model)
-			throws Exception {
-		logger.debug("modify articleNo : {}", articleNo);
-		BoardDto boardDto = boardService.getArticle(articleNo);
-		
-		Map<String, Object> responseMap = new HashMap<>();
-		// Populate the responseMap with the necessary data from the boardDto
-		responseMap.put("article", boardDto);
-		responseMap.put("pgno", map.get("pgno"));
-		responseMap.put("key", map.get("key"));
-		responseMap.put("word", map.get("word"));
-		
-//		return "board/boardmodify";
-	}
+//	@GetMapping("/modify")
+//	public void modify(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map, Model model)
+//			throws Exception {
+//		logger.debug("modify articleNo : {}", articleNo);
+//		BoardDto boardDto = boardService.getArticle(articleNo);
+//		
+//		Map<String, Object> responseMap = new HashMap<>();
+//		// Populate the responseMap with the necessary data from the boardDto
+//		responseMap.put("article", boardDto);
+//		responseMap.put("pgno", map.get("pgno"));
+//		responseMap.put("key", map.get("key"));
+//		responseMap.put("word", map.get("word"));
+//		
+////		return "board/boardmodify";
+//	}
 
 	@PostMapping("/modify")
-	public void modify(BoardDto boardDto) throws Exception {
+	public void modify(@RequestBody BoardDto boardDto) throws Exception {
 		logger.debug("modify boardDto : {}", boardDto);
+		System.out.println(boardDto.getArticleNo());
+		System.out.println(boardDto.getContent());
 		boardService.modifyArticle(boardDto);
+		
 //		redirectAttributes.addAttribute("pgno", map.get("pgno"));
 //		redirectAttributes.addAttribute("key", map.get("key"));
 //		redirectAttributes.addAttribute("word", map.get("word"));
@@ -200,10 +203,10 @@ public class BoardController {
 	}
 
 	@GetMapping("/delete")
-	public void delete(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map,
-			RedirectAttributes redirectAttributes) throws Exception {
-		logger.debug("delete articleNo : {}", articleNo);
-		boardService.deleteArticle(articleNo, uploadPath);
+	public void delete(BoardDto dto) throws Exception {
+		logger.debug("delete articleNo : {}", dto.getArticleNo());
+		System.out.println("삭제" + dto.getArticleNo());
+		boardService.deleteArticle(dto.getArticleNo(), uploadPath);
 //		redirectAttributes.addAttribute("pgno", map.get("pgno"));
 //		redirectAttributes.addAttribute("key", map.get("key"));
 //		redirectAttributes.addAttribute("word", map.get("word"));

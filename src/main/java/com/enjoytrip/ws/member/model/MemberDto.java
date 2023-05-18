@@ -14,8 +14,6 @@ public class MemberDto {
 	public MemberDto() {
 		super();
 	}
-	
-
 
 	public String getUserId() {
 		return userId;
