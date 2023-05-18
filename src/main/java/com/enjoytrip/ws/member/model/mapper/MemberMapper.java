@@ -14,13 +14,9 @@ public interface MemberMapper {
 	int idCheck(String userId) throws SQLException;
 	void joinMember(MemberDto memberDto) throws SQLException;
 	MemberDto loginMember(MemberDto dto) throws SQLException;
-	
-	/* Admin */
-	
-	
-	
-	//여기부터 만듬 - sooyeon
-	void registMember(MemberDto memberDto) throws SQLException;
+		
+
+	boolean registMember(MemberDto memberDto) throws SQLException;
 	MemberDto loginMember(Map<String, String> map) throws SQLException;
 	MemberDto getMemberInfo(String userId) throws SQLException;
 	void memberUpdate(Map<String, String> map) throws SQLException;

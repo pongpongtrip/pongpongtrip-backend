@@ -7,6 +7,7 @@ public class MemberDto {
 	private String userPassword;
 	private String joinDate;
 	private Integer admin;
+	private String email;
 	
 	
 	
@@ -14,14 +15,6 @@ public class MemberDto {
 		super();
 	}
 	
-	public MemberDto(String userId, String userName, String userPassword, String joinDate, Integer admin) {
-		super();
-		this.userId = userId;
-		this.userName = userName;
-		this.userPassword = userPassword;
-		this.joinDate = joinDate;
-		this.admin = admin;
-	}
 
 
 	public String getUserId() {
@@ -63,12 +56,22 @@ public class MemberDto {
 	public void setAdmin(int admin) {
 		this.admin = admin;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 
 	@Override
 	public String toString() {
 		return "MemberDto [userId=" + userId + ", userName=" + userName + ", userPassword=" + userPassword
-				+ ", joinDate=" + joinDate + ", admin=" + admin + "]";
+				+ ", joinDate=" + joinDate + ", admin=" + admin + ", email=" + email + "]";
 	}
 
+	
 	
 }

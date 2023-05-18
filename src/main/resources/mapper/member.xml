@@ -14,11 +14,12 @@
 		<result column="user_password" property="userPassword"/>
 		<result column="join_date" property="joinDate"/>
 		<result column="admin" property="admin"/>
+		<result column="email" property="email"/>
 	</resultMap>
 
 	<insert id="registMember" parameterType="memberDto">
-		insert into members (user_id, user_name, user_password, join_date, admin)
-		values (#{userId}, #{userName}, #{userPassword}, now(), 0)
+		insert into members (user_id, user_name, user_password, join_date, admin, email)
+		values (#{userId}, #{userName}, #{userPassword}, now(), 0, #{email});
 	</insert>
 	
 	<select id="loginMember" parameterType="map" resultMap="member">
