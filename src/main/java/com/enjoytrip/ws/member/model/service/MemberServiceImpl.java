@@ -21,10 +21,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
-	//여기부터 만듬 - sooyeon
 	@Override
-	public void registMember(MemberDto memberDto) throws Exception {
-		memberMapper.registMember(memberDto);
+	public boolean registMember(MemberDto memberDto) throws Exception {
+		return memberMapper.registMember(memberDto);
 	}
 	
 	@Override

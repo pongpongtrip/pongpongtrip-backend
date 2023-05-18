@@ -9,67 +9,69 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.enjoytrip.ws.member.model.MemberDto;
 import com.enjoytrip.ws.member.model.service.MemberService;
 
 
 
-@Controller
-@RequestMapping("/member222")
-public class MemberController {
+
+@RestController
+@CrossOrigin("*")
+@RequestMapping("/member")
+public class MemberRestController {
 	
-	private final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	private final Logger logger = LoggerFactory.getLogger(MemberRestController.class);
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
 	
 	private MemberService memberService;
 
-	public MemberController(MemberService memberService) {
+	@Autowired
+	public MemberRestController(MemberService memberService) {
 		super();
 		this.memberService = memberService;
 	}
 
-	@GetMapping("/regist")
-	public String join() {
-		return "member/regist";
-	}
-	
-	
+
 	@GetMapping("/{userid}")
 	@ResponseBody
-	public String idCheck(@PathVariable("userid") String userId) throws Exception {
+	public  ResponseEntity<String> idCheck(@PathVariable("userid") String userId) throws Exception {
 		logger.debug("idCheck userid : {}", userId);
 		int cnt = memberService.idCheck(userId);
-		return cnt + "";
+		return new ResponseEntity<String>(cnt+"", HttpStatus.OK);
 	}
 	
 	
 	@PostMapping("/regist")
-	public String join(MemberDto memberDto, Model model) {
-		logger.debug("memberDto info : {}", memberDto);
+	public ResponseEntity<String> join(@RequestBody MemberDto memberDto)  {
+		logger.debug("memberDto info : {}", memberDto);	
+		System.out.println(memberDto.toString());
 		try {
-			memberService.registMember(memberDto);
-			return "redirect:/member/login";
+			if(memberService.registMember(memberDto)) {
+				return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("msg", "회원 가입 중 문제 발생!!!");
-			return "error/error";
+			return new ResponseEntity<String>(FAIL, HttpStatus.OK);
 		}
+		
+		return new ResponseEntity<String>("test", HttpStatus.OK);
 	}
 
-	
-	@GetMapping("/login")
-	public String login() {
-		return "member/login";
-	}
-	
+
 	@PostMapping("/login")
 	public String login(@RequestParam Map<String, String> map, @RequestParam(name = "saveid", required = false) String saveid, Model model, HttpSession session, HttpServletResponse response) {
 		logger.debug("login map : {}", map);
