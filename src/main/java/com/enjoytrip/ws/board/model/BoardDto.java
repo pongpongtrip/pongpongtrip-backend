@@ -15,13 +15,16 @@ public class BoardDto {
 	
 	
 
-	public BoardDto(String userId, String subject, String content) {
-		super();
-		this.userId = userId;
-		this.subject = subject;
-		this.content = content;
-	}
-
+//	public BoardDto(String userId, String subject, String content) {
+//		super();
+//		this.userId = userId;
+//		this.subject = subject;
+//		this.content = content;
+//	}
+	
+//	public BoardDto(int articleNo) {
+//		this.articleNo = articleNo;
+//	}
 	public int getArticleNo() {
 		return articleNo;
 	}
