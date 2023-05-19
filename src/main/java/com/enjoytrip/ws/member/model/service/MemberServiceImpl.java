@@ -1,8 +1,11 @@
 package com.enjoytrip.ws.member.model.service;
 
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,49 +15,49 @@ import com.enjoytrip.ws.member.model.mapper.MemberMapper;
 @Service
 public class MemberServiceImpl implements MemberService {
 	
-	private MemberMapper memberMapper;
+//	private MemberMapper memberMapper;
+//	@Autowired
+//	public MemberServiceImpl(MemberMapper memberMapper) {
+//		super();
+//		this.memberMapper = memberMapper;
+//	}
 	
 	@Autowired
-	public MemberServiceImpl(MemberMapper memberMapper) {
-		super();
-		this.memberMapper = memberMapper;
-	}
-
+	private SqlSession sqlSession;
+	
 
 	@Override
 	public boolean registMember(MemberDto memberDto) throws Exception {
-		return memberMapper.registMember(memberDto);
+//		return memberMapper.registMember(memberDto);
+		return sqlSession.getMapper(MemberMapper.class).registMember(memberDto);
 	}
 	
 	@Override
-	public MemberDto loginMember(Map<String, String> map) throws Exception {
-		return memberMapper.loginMember(map);
+	public MemberDto loginMember(MemberDto memberDto) throws Exception {
+		if(memberDto.getUserId() == null || memberDto.getUserPassword() == null) {
+			return null;
+		}
+		return sqlSession.getMapper(MemberMapper.class).loginMember(memberDto);
 	}
 
 
 
 	@Override
 	public MemberDto getMemberInfo(String userId) throws Exception {
-		return memberMapper.getMemberInfo(userId);
+		return sqlSession.getMapper(MemberMapper.class).getMemberInfo(userId);
 	}
 
-
-	@Override
-	public void memberUpdate(Map<String, String> map) throws Exception {
-		memberMapper.memberUpdate(map);
-		
-	}
 
 
 	@Override
 	public void memberDelete(String userId) throws Exception {
-		memberMapper.memberDelete(userId);
+		sqlSession.getMapper(MemberMapper.class).memberDelete(userId);
 		
 	}
 	
 	@Override
 	public int idCheck(String userId) throws Exception {
-		return memberMapper.idCheck(userId);
+		return sqlSession.getMapper(MemberMapper.class).idCheck(userId);
 	}
 	
 	
@@ -62,21 +65,21 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public List<MemberDto> listMember(Map<String, Object> map) throws Exception {
-		return memberMapper.listMember(map);
+		return sqlSession.getMapper(MemberMapper.class).listMember(map);
 	}
 
 
 
 	@Override
 	public MemberDto getMember(String userId) throws Exception {
-		return memberMapper.getMember(userId);
+		return sqlSession.getMapper(MemberMapper.class).getMember(userId);
 	}
 
 
 
 	@Override
 	public void updateMemberAdmin(MemberDto memberDto) throws Exception {
-		memberMapper.updateMemberAdmin(memberDto);
+		sqlSession.getMapper(MemberMapper.class).updateMemberAdmin(memberDto);
 		
 	}
 
@@ -84,13 +87,48 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void deleteMemberAdmin(String userId) throws Exception {
-		memberMapper.deleteMemberAdmin(userId);
+		sqlSession.getMapper(MemberMapper.class).deleteMemberAdmin(userId);
 		
 	}
 	//--Admin end
 
+	@Override
+	public void saveRefreshToken(String userId, String refreshToken) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userid", userId);
+		map.put("token", refreshToken);
+		sqlSession.getMapper(MemberMapper.class).saveRefreshToken(map);
+		
+	}
 
-	
+	@Override
+	public void deleRefreshToken(String userid) throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("userid", userid);
+		map.put("token", null);
+		sqlSession.getMapper(MemberMapper.class).deleteRefreshToken(map);
+		
+	}
 
+	@Override
+	public Object getRefreshToken(String userId) throws Exception {
+		return sqlSession.getMapper(MemberMapper.class).getRefreshToken(userId);
+	}
+
+	@Override
+	public MemberDto userInfo(String userid) throws Exception {
+		return sqlSession.getMapper(MemberMapper.class).userInfo(userid);
+	}
+
+	@Override
+	public int checkPassword(MemberDto memberDto) throws Exception {
+		return sqlSession.getMapper(MemberMapper.class).checkPassword(memberDto);
+	}
+
+	@Override
+	public void memberUpdate(MemberDto memberDto) throws Exception {
+		sqlSession.getMapper(MemberMapper.class).memberUpdate(memberDto);
+		
+	}
 
 }
