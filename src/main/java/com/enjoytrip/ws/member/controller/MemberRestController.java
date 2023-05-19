@@ -216,16 +216,16 @@ public class MemberRestController {
 		}
 
 	}
-//	
-//	@GetMapping("/delete")
-//	public String memberdelete(HttpSession session, Model model) throws Exception {
-//		logger.info("Welcome memberdelete!");
-//		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-//		memberService.memberDelete(memberDto.getUserId());
-//		session.invalidate();
-//		//나중에 게시판 구현시, 유저가 작성한 게시글 삭제 -> 탈퇴 해야함
-//		return "redirect:/";
-//	}
+
+	@GetMapping("/deleteMember")
+	public ResponseEntity<String> memberupdate(@RequestBody MemberDto memberDto) throws Exception {
+		logger.info("Welcome memberdelete!");
+		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
+		memberService.memberDelete(memberDto.getUserId());
+		session.invalidate();
+		//나중에 게시판 구현시, 유저가 작성한 게시글 삭제 -> 탈퇴 해야함
+		return "redirect:/";
+	}
 //	
 //	@GetMapping("/list")
 //	public String list() {
