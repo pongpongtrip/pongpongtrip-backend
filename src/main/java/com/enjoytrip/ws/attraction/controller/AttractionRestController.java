@@ -36,7 +36,7 @@ import com.enjoytrip.sort.QuickSort;
 import com.enjoytrip.ws.attraction.model.AttractionDto;
 import com.enjoytrip.ws.attraction.model.AttractionSearchDto;
 import com.enjoytrip.ws.attraction.model.service.AttractionService;
-import com.enjoytrip.ws.member.controller.MemberController;
+import com.enjoytrip.ws.member.controller.MemberRestController;
 
 
 @RestController
@@ -45,7 +45,7 @@ import com.enjoytrip.ws.member.controller.MemberController;
 public class AttractionRestController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	private final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	private final Logger logger = LoggerFactory.getLogger(MemberRestController.class);
 	
 	private AttractionService attractionService;
 	

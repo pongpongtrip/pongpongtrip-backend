@@ -9,7 +9,7 @@ import com.enjoytrip.ws.member.model.MemberDto;
 public interface MemberService {
 	
 	boolean registMember(MemberDto memberDto) throws Exception;
-	MemberDto loginMember(Map<String, String> map) throws Exception;
+	
 	MemberDto getMemberInfo(String userId) throws Exception;
 	void memberUpdate(Map<String, String> map) throws Exception;
 	void memberDelete(String userId) throws Exception;
@@ -20,4 +20,13 @@ public interface MemberService {
 	MemberDto getMember(String userId) throws Exception;
 	void updateMemberAdmin(MemberDto memberDto) throws Exception;
 	void deleteMemberAdmin(String userId) throws Exception;
+	
+	//JWT
+	public MemberDto loginMember(MemberDto memberDto) throws Exception;
+	void saveRefreshToken(String userId, String refreshToken)throws Exception;
+	void deleRefreshToken(String userid) throws Exception;
+	Object getRefreshToken(String userId) throws Exception;
+	MemberDto userInfo(String userid) throws Exception;
+	
+	
 }
