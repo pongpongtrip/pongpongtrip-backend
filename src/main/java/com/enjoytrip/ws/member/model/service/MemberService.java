@@ -9,9 +9,10 @@ import com.enjoytrip.ws.member.model.MemberDto;
 public interface MemberService {
 	
 	boolean registMember(MemberDto memberDto) throws Exception;
+	void memberUpdate(MemberDto memberDto) throws Exception;
 	
+	//수정하면서 안쓴것들
 	MemberDto getMemberInfo(String userId) throws Exception;
-	void memberUpdate(Map<String, String> map) throws Exception;
 	void memberDelete(String userId) throws Exception;
 	int idCheck(String userId) throws Exception;
 	
@@ -27,6 +28,8 @@ public interface MemberService {
 	void deleRefreshToken(String userid) throws Exception;
 	Object getRefreshToken(String userId) throws Exception;
 	MemberDto userInfo(String userid) throws Exception;
+
+	int checkPassword(MemberDto memberDto)throws Exception;
 	
 	
 }

@@ -42,7 +42,7 @@
 	
 	<update id="memberUpdate" parameterType="map">
 		update members
-		set user_name = #{userName}, user_password=#{userPassword}
+		set user_name = #{userName}, email = #{email}
 		where user_id = #{userId}
 	</update>
 	
@@ -102,6 +102,12 @@
 		where user_id = #{userId}
 	</delete>
 	<!-- Admin end -->
+	
+	<select id="checkPassword" parameterType="map" resultType="int">
+		select count(user_id)
+		from members
+		where user_id = #{userId} and user_password = #{userPassword}
+	</select>
 	
 	
 </mapper>

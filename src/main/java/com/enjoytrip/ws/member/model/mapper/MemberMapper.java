@@ -14,12 +14,12 @@ public interface MemberMapper {
 	int idCheck(String userId) throws SQLException;
 	void joinMember(MemberDto memberDto) throws SQLException;
 	MemberDto loginMember(MemberDto dto) throws SQLException;
+	void memberUpdate(MemberDto memberDto) throws SQLException;
 		
 
 	boolean registMember(MemberDto memberDto) throws SQLException;
 	MemberDto loginMember(Map<String, String> map) throws SQLException;
 	MemberDto getMemberInfo(String userId) throws SQLException;
-	void memberUpdate(Map<String, String> map) throws SQLException;
 	void memberDelete(String userId) throws SQLException;
 	
 	//Admin
@@ -31,6 +31,7 @@ public interface MemberMapper {
 	void saveRefreshToken(Map<String, String> map)throws SQLException;
 	void deleteRefreshToken(Map<String, String> map)throws SQLException;
 	Object getRefreshToken(String userId) throws SQLException;
-	public MemberDto userInfo(String userid)throws SQLException;
+	public MemberDto userInfo(String userid) throws SQLException;
+	int checkPassword(MemberDto memberDto) throws SQLException;
 	
 }

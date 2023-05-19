@@ -48,12 +48,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
-	@Override
-	public void memberUpdate(Map<String, String> map) throws Exception {
-		sqlSession.getMapper(MemberMapper.class).memberUpdate(map);
-		
-	}
-
 
 	@Override
 	public void memberDelete(String userId) throws Exception {
@@ -124,6 +118,17 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberDto userInfo(String userid) throws Exception {
 		return sqlSession.getMapper(MemberMapper.class).userInfo(userid);
+	}
+
+	@Override
+	public int checkPassword(MemberDto memberDto) throws Exception {
+		return sqlSession.getMapper(MemberMapper.class).checkPassword(memberDto);
+	}
+
+	@Override
+	public void memberUpdate(MemberDto memberDto) throws Exception {
+		sqlSession.getMapper(MemberMapper.class).memberUpdate(memberDto);
+		
 	}
 
 }

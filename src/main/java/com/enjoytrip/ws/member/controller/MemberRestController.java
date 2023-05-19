@@ -68,7 +68,7 @@ public class MemberRestController {
 			return new ResponseEntity<String>(FAIL, HttpStatus.OK);
 		}
 		
-		return new ResponseEntity<String>("test", HttpStatus.OK);
+		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
 	}
 
 
@@ -169,33 +169,53 @@ public class MemberRestController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
-//	@GetMapping("/logout")
-//	public String logout(HttpSession session) {
-//		session.invalidate();
-//		return "redirect:/";
-//	}
-//	
-//	@GetMapping("/member-info")
-//	public String memberInfo() {
-//		return "member/member-info";
-//	}
-//	
-//	@GetMapping("/update")
-//	public String memberupdate(HttpSession session, Model model) throws Exception {
-//		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-//		model.addAttribute("memberinfo",memberService.getMemberInfo(memberDto.getUserId()));
-//		return "member/memberupdate";
-//	}
-//	
-//	@PostMapping("/update")
-//	public String memberupdateaf(@RequestParam Map<String, String> map, Model model, HttpServletRequest rq) throws Exception {
-//		logger.info("Welcome userupdateaf! The client map is {}.",map);
-//		memberService.memberUpdate(map);
-//		HttpSession session = rq.getSession();
-//		session.setAttribute("userinfo", memberService.loginMember(map));
-//		model.addAttribute("memberinfo", memberService.getMemberInfo(map.get("userId")));
-//		return "member/memberupdate";
-//	}
+	@GetMapping("/mypage/{userid}")
+	public ResponseEntity<Map<String, Object>> mypage(@PathVariable("userid") String userid,HttpServletRequest request) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.UNAUTHORIZED;
+		if (jwtService.checkToken(request.getHeader("access-token"))) {
+			try {
+//				로그인 사용자 정보.
+				MemberDto memberDto = memberService.userInfo(userid);
+				resultMap.put("userInfo", memberDto);
+				resultMap.put("message", SUCCESS);
+				status = HttpStatus.ACCEPTED;
+			} catch (Exception e) {
+				logger.error("정보조회 실패 : {}", e);
+				resultMap.put("message", e.getMessage());
+				status = HttpStatus.INTERNAL_SERVER_ERROR;
+			}
+		} else {
+			logger.error("사용 불가능 토큰!!!");
+			resultMap.put("message", FAIL);
+			status = HttpStatus.UNAUTHORIZED;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+	
+	@PostMapping("/checkpassword")
+	public ResponseEntity<String> checkpassword(@RequestBody MemberDto memberDto) throws Exception {
+		logger.debug("checkpassword memberDto : {}", memberDto);
+
+		int isCorrectPwd = memberService.checkPassword(memberDto); //1이면 success
+		return new ResponseEntity<String>(isCorrectPwd+"", HttpStatus.OK);
+	}
+	
+
+	
+	@PostMapping("/update")
+	public  ResponseEntity<String> memberupdate(@RequestBody MemberDto memberDto) {
+		logger.info("Welcome memberupdate! The client map is {}.",memberDto);
+		
+		try {
+			memberService.memberUpdate(memberDto);
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(FAIL, HttpStatus.OK);
+		}
+
+	}
 //	
 //	@GetMapping("/delete")
 //	public String memberdelete(HttpSession session, Model model) throws Exception {
