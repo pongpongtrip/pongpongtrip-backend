@@ -27,4 +27,10 @@ public class AttractionServiceImpl implements AttractionService {
 		return attractionMapper.attractionList(sido_code, content_type_id, title);
 	}
 
+	@Override
+	public List<AttractionDto> hotAttractionList() throws SQLException {
+		// TODO Auto-generated method stub
+		return attractionMapper.hotAttractionList();
+	}
+
 }

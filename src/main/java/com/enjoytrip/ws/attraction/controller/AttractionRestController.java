@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,10 +81,23 @@ public class AttractionRestController extends HttpServlet {
 			System.out.println(attractionList.get(i).getTitle());
 		}
 		
-//		model.addAttribute("list", attractionList);
-//		
-//		
-//		return "attraction/tripsearch";
+		return attractionList;
+	}
+	
+	@PostMapping(value="/hotplace/search")
+	public List<AttractionDto> hotplace(@RequestBody AttractionSearchDto dto) throws SQLException {
+		List<AttractionDto> attractionList = attractionService.attractionList(Integer.parseInt(dto.getSido_code()), Integer.parseInt(dto.getContent_type_id()), dto.getSearch_keyword());
+//		List<AttractionDto> attractionList = attractionService.hotAttractionList();
+		
+		return attractionList;
+	}
+	
+	@PostMapping(value="/hotplace")
+	public List<AttractionDto> hotplace() throws SQLException {
+		
+//		List<AttractionDto> attractionList = attractionService.hotAttractionList(Integer.parseInt(dto.getSido_code()), Integer.parseInt(dto.getContent_type_id()));
+		List<AttractionDto> attractionList = attractionService.hotAttractionList();
+		
 		return attractionList;
 	}
 	
@@ -166,5 +180,7 @@ public class AttractionRestController extends HttpServlet {
 		
 		return "attraction/tripplan";
 	}
+	
+	
     
 }
