@@ -11,6 +11,7 @@ public class AttractionDto {
 	public AttractionDto() {
 		super();
 	}
+	
 
 	public AttractionDto(String first_image, String content_id, String title, String addr1, String latitude,
 			String longitude) {

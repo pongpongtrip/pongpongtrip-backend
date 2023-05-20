@@ -5,17 +5,6 @@ public class AttractionSearchDto {
 	private String content_type_id;
 	private String search_keyword;
 	
-	public AttractionSearchDto() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public AttractionSearchDto(String sido_code, String content_type_id, String search_keyword) {
-		super();
-		this.sido_code = sido_code;
-		this.content_type_id = content_type_id;
-		this.search_keyword = search_keyword;
-	}
 
 	public String getSido_code() {
 		return sido_code;

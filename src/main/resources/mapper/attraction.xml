@@ -14,9 +14,16 @@
 	</resultMap>
 
 	<select id="attractionList" parameterType="map" resultMap="attraction">
-		select first_image, content_id,title, addr1, latitude, longitude
-		from attraction_info
+		select A.first_image, A.content_id, A.title, A.addr1, B.hit
+		from attraction_info as A join hotplace as B on A.content_id = B.content_id
 		where sido_code=#{sido_code} AND content_type_id=#{content_type_id} AND title like concat('%',#{title},'%')
+		order by B.hit desc;
+	</select>
+	
+	<select id="hotAttractionList" parameterType="map" resultMap="attraction">
+		select A.first_image, A.content_id, A.title, A.addr1, B.hit
+		from attraction_info as A join hotplace as B on A.content_id = B.content_id
+		order by B.hit desc;
 
 	</select>
 

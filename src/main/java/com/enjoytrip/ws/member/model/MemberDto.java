@@ -11,6 +11,16 @@ public class MemberDto {
 	
 	
 	
+	
+	public MemberDto(String userId, String userName, String userPassword, String joinDate, Integer admin) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.userPassword = userPassword;
+		this.joinDate = joinDate;
+		this.admin = admin;
+	}
+
 	public MemberDto() {
 		super();
 	}
