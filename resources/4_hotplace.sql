@@ -28,4 +28,9 @@ WHERE content_id IN (
     ) AS random_hotplaces
 );
 
-select * from hotplace order by hit desc;
+CREATE TABLE attraction_info_description AS
+SELECT A.*, B.homepage, B.overview, B.telname
+FROM attraction_info AS A
+JOIN attraction_description AS B ON A.content_id = B.content_id
+GROUP BY A.content_id;
+

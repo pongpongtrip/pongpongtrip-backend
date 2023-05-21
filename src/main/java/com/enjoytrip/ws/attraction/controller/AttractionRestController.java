@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enjoytrip.sort.QuickSort;
+import com.enjoytrip.ws.attraction.model.AttractionDetailDto;
 import com.enjoytrip.ws.attraction.model.AttractionDto;
 import com.enjoytrip.ws.attraction.model.AttractionSearchDto;
 import com.enjoytrip.ws.attraction.model.service.AttractionService;
@@ -63,7 +64,7 @@ public class AttractionRestController extends HttpServlet {
 	}
 	
 	@PostMapping(value ="/search")
-	public List<AttractionDto> search(@RequestBody AttractionSearchDto dto) throws SQLException {
+	public List<AttractionDetailDto> search(@RequestBody AttractionSearchDto dto) throws SQLException {
 		System.out.println(dto.getSido_code());
 		System.out.println(dto.getContent_type_id());
 		System.out.println(dto.getSearch_keyword());
@@ -72,7 +73,7 @@ public class AttractionRestController extends HttpServlet {
 		String title = dto.getSearch_keyword();
 		System.out.println(sido_code+" " + content_type_id +" "+ title);
 
-		List<AttractionDto> attractionList = attractionService.attractionList(sido_code, content_type_id, title);
+		List<AttractionDetailDto> attractionList = attractionService.attractionList(sido_code, content_type_id, title);
 
 		QuickSort quickSort = new QuickSort();
 		quickSort.pivotNaturalSort(attractionList, 0, attractionList.size() - 1);
@@ -85,8 +86,8 @@ public class AttractionRestController extends HttpServlet {
 	}
 	
 	@PostMapping(value="/hotplace/search")
-	public List<AttractionDto> hotplace(@RequestBody AttractionSearchDto dto) throws SQLException {
-		List<AttractionDto> attractionList = attractionService.attractionList(Integer.parseInt(dto.getSido_code()), Integer.parseInt(dto.getContent_type_id()), dto.getSearch_keyword());
+	public List<AttractionDetailDto> hotplace(@RequestBody AttractionSearchDto dto) throws SQLException {
+		List<AttractionDetailDto> attractionList = attractionService.attractionList(Integer.parseInt(dto.getSido_code()), Integer.parseInt(dto.getContent_type_id()), dto.getSearch_keyword());
 //		List<AttractionDto> attractionList = attractionService.hotAttractionList();
 		
 		return attractionList;
@@ -128,7 +129,7 @@ public class AttractionRestController extends HttpServlet {
 	
 	@RequestMapping(value ="/searchPlan", method = RequestMethod.POST)
 	@ResponseBody
-	public List<AttractionDto> searchPlan(@RequestParam String ssido_code, @RequestParam String scontent_type_id, 
+	public List<AttractionDetailDto> searchPlan(@RequestParam String ssido_code, @RequestParam String scontent_type_id, 
 			@RequestParam String title) throws SQLException {
 		System.out.println(ssido_code+" " + scontent_type_id +" "+ title);
 		System.out.println("들어옴");
@@ -139,7 +140,7 @@ public class AttractionRestController extends HttpServlet {
 		int content_type_id = Integer.parseInt(scontent_type_id);
 		System.out.println(sido_code+" " + content_type_id +" "+ title);
 		
-		List<AttractionDto> attractionList = attractionService.attractionList(sido_code, content_type_id, title);
+		List<AttractionDetailDto> attractionList = attractionService.attractionList(sido_code, content_type_id, title);
 
 		QuickSort quickSort = new QuickSort();
 		quickSort.pivotNaturalSort(attractionList, 0, attractionList.size() - 1);

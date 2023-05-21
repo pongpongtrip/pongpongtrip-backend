@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.enjoytrip.ws.attraction.model.AttractionDetailDto;
 import com.enjoytrip.ws.attraction.model.AttractionDto;
 import com.enjoytrip.ws.attraction.model.mapper.AttractionMapper;
 
@@ -23,7 +24,7 @@ public class AttractionServiceImpl implements AttractionService {
 	// --- �̱���
 
 	@Override
-	public List<AttractionDto> attractionList(int sido_code, int content_type_id, String title) throws SQLException {	
+	public List<AttractionDetailDto> attractionList(int sido_code, int content_type_id, String title) throws SQLException {	
 		return attractionMapper.attractionList(sido_code, content_type_id, title);
 	}
 
