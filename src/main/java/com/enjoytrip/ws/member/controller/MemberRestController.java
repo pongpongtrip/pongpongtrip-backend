@@ -59,16 +59,29 @@ public class MemberRestController {
 	
 	@PostMapping("/regist")
 	public ResponseEntity<String> join(@RequestBody MemberDto memberDto)  {
-		logger.debug("memberDto info : {}", memberDto);	
+		logger.debug("memberDto info : {}", memberDto);
+		
+		int cnt;
 		try {
-			if(memberService.registMember(memberDto)) {
-				return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+			cnt = memberService.isMemberDelflag(memberDto.getUserId()); //delflag가 있는 id인지
+			
+			if(cnt == 1) { //기존에 있는 아이디 & delflag가 있다면
+				if(memberService.registMemberDelflag(memberDto)) {
+					return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+				}
+			}
+			if(cnt == 0) { //기존에 있는 아이디가 아니라면
+				if(memberService.registMember(memberDto)) {
+					return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+				}
+				
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<String>(FAIL, HttpStatus.OK);
 		}
-		
 		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
+		
 	}
 
 
@@ -204,7 +217,7 @@ public class MemberRestController {
 
 	
 	@PostMapping("/update")
-	public  ResponseEntity<String> memberupdate(@RequestBody MemberDto memberDto) {
+	public  ResponseEntity<String> memberUpdate(@RequestBody MemberDto memberDto) {
 		logger.info("Welcome memberupdate! The client map is {}.",memberDto);
 		
 		try {
@@ -217,14 +230,16 @@ public class MemberRestController {
 
 	}
 
-	@GetMapping("/deleteMember")
-	public ResponseEntity<String> memberupdate(@RequestBody MemberDto memberDto) throws Exception {
+	@GetMapping("/delete/{userid}")
+	public ResponseEntity<String> deleteMember(@PathVariable("userid") String userId) {
 		logger.info("Welcome memberdelete!");
-		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-		memberService.memberDelete(memberDto.getUserId());
-		session.invalidate();
-		//나중에 게시판 구현시, 유저가 작성한 게시글 삭제 -> 탈퇴 해야함
-		return "redirect:/";
+		try {
+			memberService.memberDelete(userId);
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(FAIL, HttpStatus.OK);
+		}
 	}
 //	
 //	@GetMapping("/list")
