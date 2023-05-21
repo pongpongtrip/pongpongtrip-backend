@@ -8,13 +8,15 @@ import com.enjoytrip.ws.member.model.MemberDto;
 
 public interface MemberService {
 	
+	int idCheck(String userId) throws Exception;
+	int isMemberDelflag(String userId) throws Exception;
 	boolean registMember(MemberDto memberDto) throws Exception;
+	boolean registMemberDelflag(MemberDto memberDto) throws Exception;
 	void memberUpdate(MemberDto memberDto) throws Exception;
+	void memberDelete(String userId) throws Exception;
 	
 	//수정하면서 안쓴것들
 	MemberDto getMemberInfo(String userId) throws Exception;
-	void memberDelete(String userId) throws Exception;
-	int idCheck(String userId) throws Exception;
 	
 	//Admin
 	List<MemberDto> listMember(Map<String, Object> map) throws Exception;

@@ -27,9 +27,19 @@ public class MemberServiceImpl implements MemberService {
 	
 
 	@Override
+	public int isMemberDelflag(String userId) {
+		return sqlSession.getMapper(MemberMapper.class).isMemberDelflag(userId);
+	}
+
+	
+	@Override
 	public boolean registMember(MemberDto memberDto) throws Exception {
-//		return memberMapper.registMember(memberDto);
 		return sqlSession.getMapper(MemberMapper.class).registMember(memberDto);
+	}
+	
+	@Override
+	public boolean registMemberDelflag(MemberDto memberDto) throws Exception {
+		return sqlSession.getMapper(MemberMapper.class).registMemberDelflag(memberDto);
 	}
 	
 	@Override
@@ -130,5 +140,7 @@ public class MemberServiceImpl implements MemberService {
 		sqlSession.getMapper(MemberMapper.class).memberUpdate(memberDto);
 		
 	}
+
+
 
 }

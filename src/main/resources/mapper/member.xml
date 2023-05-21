@@ -16,16 +16,29 @@
 		<result column="admin" property="admin"/>
 		<result column="email" property="email"/>
 	</resultMap>
+	
+	
+	<select id="isMemberDelflag" parameterType="String" resultType="int">
+		select count(user_id)
+		from members
+		where user_id = #{userId} and delflag = 1;
+	</select>
 
 	<insert id="registMember" parameterType="memberDto">
 		insert into members (user_id, user_name, user_password, join_date, admin, email)
 		values (#{userId}, #{userName}, #{userPassword}, now(), 0, #{email});
 	</insert>
 	
+	<update id="registMemberDelflag" parameterType="memberDto">
+		update members
+		set user_name = #{userName}, user_password = #{userPassword}, join_date = now(), email = #{email}, delflag = 0
+		where user_id = #{userId}
+	</update>
+	
 	<select id="loginMember" parameterType="map" resultMap="member">
 		select user_id, user_name
 		from members
-		where user_id = #{userId} and user_password = #{userPassword}
+		where user_id = #{userId} and user_password = #{userPassword} and delflag = 0
 	</select>
 	
 	<select id="userInfo" parameterType="string" resultMap="memberAll">
@@ -47,14 +60,15 @@
 	</update>
 	
 	<delete id="memberDelete" parameterType="String">
-		delete from members
+		update members
+		set delflag = 1		
 		where user_id = #{userId}
 	</delete>
 	
 	<select id="idCheck" parameterType="String" resultType="int">
 		select count(user_id)
 		from members
-		where user_id = #{userId}
+		where user_id = #{userId} and delflag = 0;
 	</select>
 	
 	<update id="saveRefreshToken" parameterType="map">

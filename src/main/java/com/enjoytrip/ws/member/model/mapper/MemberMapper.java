@@ -12,15 +12,17 @@ import com.enjoytrip.ws.member.model.MemberDto;
 public interface MemberMapper {
 
 	int idCheck(String userId) throws SQLException;
+	int isMemberDelflag(String userId);
+	boolean registMember(MemberDto memberDto) throws SQLException;
+	boolean registMemberDelflag(MemberDto memberDto);
 	void joinMember(MemberDto memberDto) throws SQLException;
 	MemberDto loginMember(MemberDto dto) throws SQLException;
 	void memberUpdate(MemberDto memberDto) throws SQLException;
+	void memberDelete(String userId) throws SQLException;
 		
-
-	boolean registMember(MemberDto memberDto) throws SQLException;
+	//안쓴것들
 	MemberDto loginMember(Map<String, String> map) throws SQLException;
 	MemberDto getMemberInfo(String userId) throws SQLException;
-	void memberDelete(String userId) throws SQLException;
 	
 	//Admin
 	List<MemberDto> listMember(Map<String, Object> map) throws SQLException;
