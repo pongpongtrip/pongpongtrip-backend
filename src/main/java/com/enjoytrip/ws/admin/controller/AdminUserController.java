@@ -28,9 +28,8 @@ import com.enjoytrip.ws.member.model.service.MemberService;
 
 
 @RestController
-//@Controller
+@CrossOrigin("*")
 @RequestMapping("/admin")
-//@CrossOrigin("*")
 public class AdminUserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(AdminUserController.class);
@@ -48,7 +47,7 @@ public class AdminUserController {
 		return "admin/list";
 	}
 */
-	@GetMapping(value = "/user")
+	@GetMapping(value = "/user/list")
 	public ResponseEntity<?> userList() {
 		logger.debug("userList call");
 		try {
