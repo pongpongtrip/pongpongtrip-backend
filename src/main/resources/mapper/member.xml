@@ -91,9 +91,9 @@
 	
 	<!-- Admin start -->
 	<select id="listMember" resultMap="memberAll">
-		select user_id, user_name, user_password, join_date
+		select user_id, user_name, user_password, email, join_date
 		from members
-		where user_id not like '%admin%'
+		where user_id not like '%admin%' and delflag = 0
 		order by join_date
 	</select>
 	
