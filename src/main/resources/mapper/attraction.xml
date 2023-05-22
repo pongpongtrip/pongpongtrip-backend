@@ -33,6 +33,11 @@
 		<result column="user_id" property="userId"/>
 		<result column="user_name" property="userName"/>
 	</resultMap>
+	
+	<resultMap type="AttractionLikeDto" id="attractionLike">
+		<result column="user_id" property="user_id"/>
+		<result column="content_id" property="content_id"/>
+	</resultMap>
 
 	<select id="attractionList" parameterType="map" resultMap="attractionDetail">
 		select *	
@@ -58,5 +63,14 @@
 		values (#{planId}, #{contentId}, #{time}, #{userId}, #{userName})
 	</insert>
 	
+	<insert id="likeAttraction" parameterType="AttractionLikeDto">
+		insert into member_like_place (user_id, content_id)
+		values (#{user_id}, #{content_id})
+	</insert>
+	
+	<delete id="dislikeAttraction" parameterType="AttractionLikeDto">
+		delete from member_like_place
+		where user_id=#{user_id} and content_id=#{content_id}
+	</delete>
 
 </mapper>

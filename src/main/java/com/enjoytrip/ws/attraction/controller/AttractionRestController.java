@@ -39,6 +39,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.enjoytrip.sort.QuickSort;
 import com.enjoytrip.ws.attraction.model.AttractionDetailDto;
 import com.enjoytrip.ws.attraction.model.AttractionDto;
+import com.enjoytrip.ws.attraction.model.AttractionLikeDto;
 import com.enjoytrip.ws.attraction.model.AttractionPlanDto;
 import com.enjoytrip.ws.attraction.model.AttractionSearchDto;
 import com.enjoytrip.ws.attraction.model.service.AttractionService;
@@ -210,5 +211,14 @@ public class AttractionRestController extends HttpServlet {
 		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
 	}
 	
-    
+	@PostMapping("like")
+	public boolean like(@RequestBody AttractionLikeDto dto) throws SQLException {
+		System.out.println(dto.getContent_id());
+		return attractionService.like(dto);
+	}
+	
+	@PostMapping("dislike")
+	public boolean dislike(@RequestBody AttractionLikeDto dto) throws SQLException {
+		return attractionService.dislike(dto);
+	}
 }

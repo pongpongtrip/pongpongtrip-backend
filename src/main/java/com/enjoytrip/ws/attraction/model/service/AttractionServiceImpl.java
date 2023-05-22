@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.enjoytrip.ws.attraction.model.AttractionDetailDto;
 import com.enjoytrip.ws.attraction.model.AttractionDto;
+import com.enjoytrip.ws.attraction.model.AttractionLikeDto;
 import com.enjoytrip.ws.attraction.model.AttractionPlanDto;
 import com.enjoytrip.ws.attraction.model.mapper.AttractionMapper;
 
@@ -50,6 +51,18 @@ public class AttractionServiceImpl implements AttractionService {
 		System.out.println("serimpl =>" +planDto);
 		return sqlSession.getMapper(AttractionMapper.class).writePlan(planDto);
 		
+	}
+
+	@Override
+	public boolean like(AttractionLikeDto dto) throws SQLException {
+		return sqlSession.getMapper(AttractionMapper.class).likeAttraction(dto);
+		
+	}
+
+	@Override
+	public boolean dislike(AttractionLikeDto dto) throws SQLException {
+		// TODO Auto-generated method stub
+		return sqlSession.getMapper(AttractionMapper.class).dislikeAttraction(dto);
 	}
 
 }

@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.enjoytrip.ws.attraction.model.AttractionDetailDto;
 import com.enjoytrip.ws.attraction.model.AttractionDto;
+import com.enjoytrip.ws.attraction.model.AttractionLikeDto;
 import com.enjoytrip.ws.attraction.model.AttractionPlanDto;
 
 @Mapper
@@ -20,4 +21,8 @@ public interface AttractionMapper {
 	int maxIndex() throws SQLException;
 
 	boolean writePlan(AttractionPlanDto planDto) throws SQLException;
+
+	boolean likeAttraction(AttractionLikeDto dto)throws SQLException;
+
+	boolean dislikeAttraction(AttractionLikeDto dto)throws SQLException;
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.enjoytrip.ws.attraction.model.AttractionDetailDto;
 import com.enjoytrip.ws.attraction.model.AttractionDto;
+import com.enjoytrip.ws.attraction.model.AttractionLikeDto;
 import com.enjoytrip.ws.attraction.model.AttractionPlanDto;
 
 
@@ -16,4 +17,8 @@ public interface AttractionService {
 	int maxIndex() throws SQLException;
 
 	boolean writePlan(AttractionPlanDto planDto) throws SQLException;
+
+	boolean like(AttractionLikeDto dto)throws SQLException;
+
+	boolean dislike(AttractionLikeDto dto) throws SQLException;
 }
