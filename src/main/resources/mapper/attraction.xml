@@ -25,6 +25,14 @@
 		<result column="overview" property="overview"/>
 		<result column="telname" property="telname"/>
 	</resultMap>
+	
+	<resultMap type="AttractionPlanDto" id="attractionPlan">
+		<result column="plan_id" property="planId"/>
+		<result column="content_id" property="contentId"/>
+		<result column="time" property="time"/>
+		<result column="user_id" property="userId"/>
+		<result column="user_name" property="userName"/>
+	</resultMap>
 
 	<select id="attractionList" parameterType="map" resultMap="attractionDetail">
 		select *	
@@ -39,5 +47,16 @@
 		order by B.hit desc;
 
 	</select>
+	
+	<select id="maxIndex" resultType="int">
+		select coalesce(max(plan_id), 0)
+		from plan;
+	</select>
+	
+	<insert id="writePlan" parameterType="AttractionPlanDto">
+		insert into plan (plan_id, content_id, `time`, user_id, user_name)
+		values (#{planId}, #{contentId}, #{time}, #{userId}, #{userName})
+	</insert>
+	
 
 </mapper>

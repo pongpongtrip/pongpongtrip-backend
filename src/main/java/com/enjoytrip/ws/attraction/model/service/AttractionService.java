@@ -5,10 +5,15 @@ import java.util.List;
 
 import com.enjoytrip.ws.attraction.model.AttractionDetailDto;
 import com.enjoytrip.ws.attraction.model.AttractionDto;
+import com.enjoytrip.ws.attraction.model.AttractionPlanDto;
 
 
 public interface AttractionService {
 	List<AttractionDetailDto> attractionList(int sido_code, int content_type_id, String title) throws SQLException;
 
 	List<AttractionDto> hotAttractionList() throws SQLException;
+
+	int maxIndex() throws SQLException;
+
+	boolean writePlan(AttractionPlanDto planDto) throws SQLException;
 }
