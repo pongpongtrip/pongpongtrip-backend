@@ -40,6 +40,7 @@ import com.enjoytrip.sort.QuickSort;
 import com.enjoytrip.ws.attraction.model.AttractionDetailDto;
 import com.enjoytrip.ws.attraction.model.AttractionDto;
 import com.enjoytrip.ws.attraction.model.AttractionLikeDto;
+import com.enjoytrip.ws.attraction.model.AttractionPlanDetailDto;
 import com.enjoytrip.ws.attraction.model.AttractionPlanDto;
 import com.enjoytrip.ws.attraction.model.AttractionSearchDto;
 import com.enjoytrip.ws.attraction.model.service.AttractionService;
@@ -220,5 +221,17 @@ public class AttractionRestController extends HttpServlet {
 	@PostMapping("dislike")
 	public boolean dislike(@RequestBody AttractionLikeDto dto) throws SQLException {
 		return attractionService.dislike(dto);
+	}
+	
+	@PostMapping("/myhotplace")
+	public List<AttractionDetailDto> myhotplace(@RequestBody AttractionLikeDto dto) throws SQLException {
+		return attractionService.myHotPlace(dto);
+	}
+	
+	@PostMapping("/myplans")
+	public List<AttractionPlanDetailDto> myplans(@RequestBody AttractionPlanDto dto) throws SQLException {
+		System.out.println(dto.getUserId());
+		System.out.println(attractionService.myplans(dto));
+		return attractionService.myplans(dto);
 	}
 }

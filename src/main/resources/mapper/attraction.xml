@@ -38,6 +38,23 @@
 		<result column="user_id" property="user_id"/>
 		<result column="content_id" property="content_id"/>
 	</resultMap>
+	
+	<resultMap type="AttractionPlanDetailDto" id="attractionPlanDetail">
+		<result column="first_image" property="first_image"/>
+		<result column="content_id" property="content_id"/>
+		<result column="title" property="title"/>
+		<result column="addr1" property="addr1"/>
+		<result column="latitude" property="latitude"/>
+		<result column="longitude" property="longitude"/>
+		<result column="hit" property="hit"/>
+		<result column="homepage" property="homepage"/>
+		<result column="overview" property="overview"/>
+		<result column="plan_id" property="planId"/>
+		<result column="content_id" property="contentId"/>
+		<result column="time" property="time"/>
+		<result column="user_id" property="userId"/>
+		<result column="user_name" property="userName"/>
+	</resultMap>
 
 	<select id="attractionList" parameterType="map" resultMap="attractionDetail">
 		select *	
@@ -72,5 +89,23 @@
 		delete from member_like_place
 		where user_id=#{user_id} and content_id=#{content_id}
 	</delete>
-
+	
+	<select id="myHotPlace" parameterType="AttractionLikeDto" resultMap="attractionDetail">
+		select *
+		from attraction_info_description
+		where content_id IN (
+			select content_id 
+			from member_like_place
+			where user_id=#{user_id}
+		)
+	</select>
+	
+	<select id="myPlans" parameterType="AttractionPlanDto" resultMap="attractionPlanDetail">
+		select *
+		from attraction_info_description as A Join 
+		(select plan_id,content_id, time, user_id 
+		from plan
+		where user_id=#{userId}) as B on A.content_id = B.content_id
+		order by plan_id, time asc
+	</select>
 </mapper>

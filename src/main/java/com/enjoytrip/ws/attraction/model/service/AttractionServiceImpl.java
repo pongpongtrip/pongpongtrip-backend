@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.enjoytrip.ws.attraction.model.AttractionDetailDto;
 import com.enjoytrip.ws.attraction.model.AttractionDto;
 import com.enjoytrip.ws.attraction.model.AttractionLikeDto;
+import com.enjoytrip.ws.attraction.model.AttractionPlanDetailDto;
 import com.enjoytrip.ws.attraction.model.AttractionPlanDto;
 import com.enjoytrip.ws.attraction.model.mapper.AttractionMapper;
 
@@ -63,6 +64,18 @@ public class AttractionServiceImpl implements AttractionService {
 	public boolean dislike(AttractionLikeDto dto) throws SQLException {
 		// TODO Auto-generated method stub
 		return sqlSession.getMapper(AttractionMapper.class).dislikeAttraction(dto);
+	}
+
+	@Override
+	public List<AttractionDetailDto> myHotPlace(AttractionLikeDto dto) {
+		// TODO Auto-generated method stub
+		return sqlSession.getMapper(AttractionMapper.class).myHotPlace(dto);
+	}
+
+	@Override
+	public List<AttractionPlanDetailDto> myplans(AttractionPlanDto dto) {
+		// TODO Auto-generated method stub
+		return sqlSession.getMapper(AttractionMapper.class).myPlans(dto);
 	}
 
 }

@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import com.enjoytrip.ws.attraction.model.AttractionDetailDto;
 import com.enjoytrip.ws.attraction.model.AttractionDto;
 import com.enjoytrip.ws.attraction.model.AttractionLikeDto;
+import com.enjoytrip.ws.attraction.model.AttractionPlanDetailDto;
 import com.enjoytrip.ws.attraction.model.AttractionPlanDto;
 
 @Mapper
@@ -25,4 +26,8 @@ public interface AttractionMapper {
 	boolean likeAttraction(AttractionLikeDto dto)throws SQLException;
 
 	boolean dislikeAttraction(AttractionLikeDto dto)throws SQLException;
+
+	List<AttractionDetailDto> myHotPlace(AttractionLikeDto dto);
+
+	List<AttractionPlanDetailDto> myPlans(AttractionPlanDto dto);
 }
