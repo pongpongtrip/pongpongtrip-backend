@@ -1,54 +1,52 @@
 package com.enjoytrip.ws.attraction.model;
 
 public class AttractionPlanDto {
-	private int plan_id;
-	private int content_id;
-	private String user_id;
-	private int content_order;
-	
-	public AttractionPlanDto(int plan_id, String user_id) {
-		super();
-		this.plan_id = plan_id;
-		this.user_id = user_id;
+	private int index;
+	private int planId;
+	private int contentId;
+	private String time;
+	private String userId;
+	private String userName;
+	public int getIndex() {
+		return index;
 	}
-	
-	public AttractionPlanDto(int plan_id, int content_id) {
-		super();
-		this.plan_id = plan_id;
-		this.content_id = content_id;
+	public void setIndex(int index) {
+		this.index = index;
 	}
-
-	public int getPlan_id() {
-		return plan_id;
+	public int getPlanId() {
+		return planId;
 	}
-
-	public void setPlan_id(int plan_id) {
-		this.plan_id = plan_id;
+	public void setPlanId(int planId) {
+		this.planId = planId;
 	}
-
-	public int getContent_id() {
-		return content_id;
+	public int getContentId() {
+		return contentId;
 	}
-
-	public void setContent_id(int content_id) {
-		this.content_id = content_id;
+	public void setContentId(int contentId) {
+		this.contentId = contentId;
 	}
-
-	public String getUser_id() {
-		return user_id;
+	public String getTime() {
+		return time;
 	}
-
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setTime(String time) {
+		this.time = time;
 	}
-
-	public int getContent_order() {
-		return content_order;
+	public String getUserId() {
+		return userId;
 	}
-
-	public void setContent_order(int content_order) {
-		this.content_order = content_order;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	@Override
+	public String toString() {
+		return "AttractionPlanDto [index=" + index + ", planId=" + planId + ", contentId=" + contentId + ", time="
+				+ time + ", userId=" + userId + ", userName=" + userName + "]";
+	}
 	
 }

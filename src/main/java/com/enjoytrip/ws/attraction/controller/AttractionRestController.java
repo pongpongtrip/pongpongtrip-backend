@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -21,6 +22,8 @@ import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -36,8 +39,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.enjoytrip.sort.QuickSort;
 import com.enjoytrip.ws.attraction.model.AttractionDetailDto;
 import com.enjoytrip.ws.attraction.model.AttractionDto;
+import com.enjoytrip.ws.attraction.model.AttractionPlanDto;
 import com.enjoytrip.ws.attraction.model.AttractionSearchDto;
 import com.enjoytrip.ws.attraction.model.service.AttractionService;
+import com.enjoytrip.ws.board.model.BoardDto;
 import com.enjoytrip.ws.member.controller.MemberRestController;
 
 
@@ -48,6 +53,8 @@ public class AttractionRestController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	private final Logger logger = LoggerFactory.getLogger(MemberRestController.class);
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
 	
 	private AttractionService attractionService;
 	
@@ -177,11 +184,31 @@ public class AttractionRestController extends HttpServlet {
     
 	@RequestMapping(value = "/tripplan",method = RequestMethod.GET)
     public String tripPlan() {
-		
-		
 		return "attraction/tripplan";
 	}
 	
+	
+	@GetMapping("myplan/maxindex")
+	public int maxindex() throws SQLException {
+		int count = attractionService.maxIndex();
+		return count;
+	}
+	
+
+	@PostMapping("/myplan/write")
+	public ResponseEntity<String> planwrite(@RequestBody AttractionPlanDto planDto) {
+		logger.debug("myplan write planDto : {}", planDto);
+		
+		try {
+			if(attractionService.writePlan(planDto)) {
+				return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+			};
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
+	}
 	
     
 }

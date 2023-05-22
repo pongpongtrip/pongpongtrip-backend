@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.enjoytrip.ws.attraction.model.AttractionDetailDto;
 import com.enjoytrip.ws.attraction.model.AttractionDto;
+import com.enjoytrip.ws.attraction.model.AttractionPlanDto;
 
 @Mapper
 public interface AttractionMapper {
@@ -15,4 +16,8 @@ public interface AttractionMapper {
 			@Param("content_type_id") int content_type_id, @Param("title") String title) throws SQLException;
 
 	List<AttractionDto> hotAttractionList() throws SQLException;
+
+	int maxIndex() throws SQLException;
+
+	boolean writePlan(AttractionPlanDto planDto) throws SQLException;
 }
