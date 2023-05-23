@@ -201,6 +201,8 @@ public class AttractionRestController extends HttpServlet {
 	public ResponseEntity<String> planwrite(@RequestBody AttractionPlanDto planDto) {
 		logger.debug("myplan write planDto : {}", planDto);
 		
+		System.out.println(planDto);
+		
 		try {
 			if(attractionService.writePlan(planDto)) {
 				return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
