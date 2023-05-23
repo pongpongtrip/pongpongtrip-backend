@@ -204,7 +204,7 @@ public class AttractionRestController extends HttpServlet {
 		System.out.println(planDto);
 		
 		try {
-			if(attractionService.writePlan(planDto)) {
+			if(attractionService.writePlan(planDto) && attractionService.updateHit(planDto.getContentId())) {
 				return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 			};
 			
@@ -233,7 +233,6 @@ public class AttractionRestController extends HttpServlet {
 	@PostMapping("/myplans")
 	public List<AttractionPlanDetailDto> myplans(@RequestBody AttractionPlanDto dto) throws SQLException {
 		System.out.println(dto.getUserId());
-		System.out.println(attractionService.myplans(dto));
 		return attractionService.myplans(dto);
 	}
 }

@@ -30,4 +30,6 @@ public interface AttractionMapper {
 	List<AttractionDetailDto> myHotPlace(AttractionLikeDto dto);
 
 	List<AttractionPlanDetailDto> myPlans(AttractionPlanDto dto);
+
+	boolean updateHit(int contentId);
 }

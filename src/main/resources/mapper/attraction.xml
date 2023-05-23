@@ -82,6 +82,12 @@
 		values (#{planId}, #{planName}, #{contentId}, #{time}, #{userId}, #{userName})
 	</insert>
 	
+	<update id="updateHit" parameterType="int">
+		update hotplace
+		set hit = hit + 1
+		where content_id = #{contentId}
+	</update>
+	
 	<insert id="likeAttraction" parameterType="AttractionLikeDto">
 		insert into member_like_place (user_id, content_id)
 		values (#{user_id}, #{content_id})
