@@ -3,6 +3,7 @@ use attraction;
 CREATE TABLE IF NOT EXISTS `attraction`.`plan` (
   `index` INT AUTO_INCREMENT PRIMARY KEY,
   `plan_id` INT NOT NULL,
+  `plan_name` VARCHAR(20) NOT NULL,
   `content_id` INT, 
   `time` TIME,
   `user_id` VARCHAR(16),

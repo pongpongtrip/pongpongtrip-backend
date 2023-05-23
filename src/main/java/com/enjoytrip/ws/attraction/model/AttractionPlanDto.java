@@ -3,6 +3,7 @@ package com.enjoytrip.ws.attraction.model;
 public class AttractionPlanDto {
 	private int index;
 	private int planId;
+	private String planName;
 	private int contentId;
 	private String time;
 	private String userId;
@@ -18,6 +19,12 @@ public class AttractionPlanDto {
 	}
 	public void setPlanId(int planId) {
 		this.planId = planId;
+	}
+	public String getPlanName() {
+		return planName;
+	}
+	public void setPlanName(String planName) {
+		this.planName = planName;
 	}
 	public int getContentId() {
 		return contentId;
@@ -45,8 +52,8 @@ public class AttractionPlanDto {
 	}
 	@Override
 	public String toString() {
-		return "AttractionPlanDto [index=" + index + ", planId=" + planId + ", contentId=" + contentId + ", time="
-				+ time + ", userId=" + userId + ", userName=" + userName + "]";
+		return "AttractionPlanDto [index=" + index + ", planId=" + planId + ", planName=" + planName + ", contentId="
+				+ contentId + ", time=" + time + ", userId=" + userId + ", userName=" + userName + "]";
 	}
-	
+
 }
