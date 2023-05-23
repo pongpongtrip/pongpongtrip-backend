@@ -2,11 +2,14 @@ package com.enjoytrip.ws.board.model;
 
 import java.util.List;
 
+import com.enjoytrip.ws.attraction.model.AttractionPlanDetailDto;
+
 public class BoardDto {
 
 	private int articleNo;
 	private String userId;
 	private String userName;
+	private String plan;
 	private String subject;
 	private String content;
 	private int hit;
@@ -87,6 +90,14 @@ public class BoardDto {
 
 	public void setFileInfos(List<FileInfoDto> fileInfos) {
 		this.fileInfos = fileInfos;
+	}
+
+	public String getPlan() {
+		return plan;
+	}
+
+	public void setPlan(String plan) {
+		this.plan = plan;
 	}
 
 	@Override

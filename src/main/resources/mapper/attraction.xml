@@ -55,6 +55,7 @@
 		<result column="time" property="time"/>
 		<result column="user_id" property="userId"/>
 		<result column="user_name" property="userName"/>
+		<result column="plan_name" property="planName"/>
 	</resultMap>
 
 	<select id="attractionList" parameterType="map" resultMap="attractionDetail">
@@ -104,7 +105,7 @@
 	<select id="myPlans" parameterType="AttractionPlanDto" resultMap="attractionPlanDetail">
 		select *
 		from attraction_info_description as A Join 
-		(select plan_id,content_id, time, user_id 
+		(select plan_name, plan_id,content_id, time, user_id 
 		from plan
 		where user_id=#{userId}) as B on A.content_id = B.content_id
 		order by plan_id, time asc

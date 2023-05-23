@@ -8,6 +8,7 @@
 		<result column="article_no" property="articleNo"/>
 		<result column="user_id" property="userId"/>
 		<result column="user_name" property="userName"/>
+		<result column="plan" property="plan"/>
 		<result column="subject" property="subject"/>
 		<result column="content" property="content"/>
 		<result column="hit" property="hit"/>
@@ -25,8 +26,8 @@
 	</resultMap>
 
 	<insert id="writeArticle" parameterType="boardDto">
-		insert into board (user_id, subject, content, hit, register_time)
-		values (#{userId}, #{subject}, #{content}, 0, now())
+		insert into board (user_id, subject, content, hit, register_time,plan)
+		values (#{userId}, #{subject}, #{content}, 0, now(), #{plan})
 		<selectKey resultType="int" keyProperty="articleNo" order="AFTER">
 			select last_insert_id()
 		</selectKey>
@@ -52,7 +53,7 @@
 	</sql>
 
 	<select id="listArticle" parameterType="map" resultMap="article">
-		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name
+		select b.article_no, b.user_id,b.plan, b.subject, b.content, b.hit, b.register_time, m.user_name
 		from board b, members m 
 		where b.user_id = m.user_id
 		<include refid="search"></include>
@@ -69,7 +70,7 @@
 	</select>
 	
 	<select id="getArticle" parameterType="int" resultMap="viewArticle">
-		select b.article_no, b.user_id, b.subject, b.content, b.hit, b.register_time, m.user_name 
+		select b.article_no, b.user_id, b.subject, b.content,b.plan, b.hit, b.register_time, m.user_name 
 		from board b, members m
 		where b.user_id = m.user_id
 		and b.article_no = #{articleNo}
