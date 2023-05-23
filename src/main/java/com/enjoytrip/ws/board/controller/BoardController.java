@@ -89,7 +89,7 @@ public class BoardController {
 	public void write(@RequestBody BoardDto boardDto) throws Exception {
 		logger.debug("write boardDto : {}", boardDto);
 		//여기
-		
+		System.out.println(boardDto.getPlan());
 		// 임시로 설정
 		MemberDto memberDto = new MemberDto("admin", "관리자", "1234", "2023-05-02", 0);
 		boardDto.setUserId(memberDto.getUserId());

@@ -15,6 +15,7 @@ public class AttractionPlanDetailDto {
 	private String time;
 	private String userId;
 	private String userName;
+	private String planName;
 	
 	
 	
@@ -182,6 +183,16 @@ public class AttractionPlanDetailDto {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	
+	public String getPlanName() {
+		return planName;
+	}
+
+
+
+	public void setPlanName(String planName) {
+		this.planName = planName;
 	}
 
 
