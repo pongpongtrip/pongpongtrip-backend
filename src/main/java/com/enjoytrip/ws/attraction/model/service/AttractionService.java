@@ -26,4 +26,6 @@ public interface AttractionService {
 	List<AttractionDetailDto> myHotPlace(AttractionLikeDto dto);
 
 	List<AttractionPlanDetailDto> myplans(AttractionPlanDto dto);
+
+	boolean updateHit(int contentId)throws SQLException;
 }

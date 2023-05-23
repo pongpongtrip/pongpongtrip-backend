@@ -78,4 +78,10 @@ public class AttractionServiceImpl implements AttractionService {
 		return sqlSession.getMapper(AttractionMapper.class).myPlans(dto);
 	}
 
+	@Override
+	public boolean updateHit(int contentId) {
+		return sqlSession.getMapper(AttractionMapper.class).updateHit(contentId);
+		
+	}
+
 }
