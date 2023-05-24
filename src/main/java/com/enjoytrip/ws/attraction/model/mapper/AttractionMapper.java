@@ -32,4 +32,6 @@ public interface AttractionMapper {
 	List<AttractionPlanDetailDto> myPlans(AttractionPlanDto dto);
 
 	boolean updateHit(int contentId);
+
+	boolean deletePlan(AttractionPlanDto dto);
 }

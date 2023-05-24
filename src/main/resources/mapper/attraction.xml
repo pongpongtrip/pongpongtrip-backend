@@ -111,9 +111,14 @@
 	<select id="myPlans" parameterType="AttractionPlanDto" resultMap="attractionPlanDetail">
 		select *
 		from attraction_info_description as A Join 
-		(select plan_name, plan_id,content_id, time, user_id 
+		(select plan_name, plan_id,content_id, time, user_id
 		from plan
-		where user_id=#{userId}) as B on A.content_id = B.content_id
+		where user_id=#{userId} and delflag=0) as B on A.content_id = B.content_id
 		order by plan_id, time asc
 	</select>
+	
+	<update id="deletePlan" parameterType="AttractionPlanDto">
+		update plan set delflag=1 
+		where plan_id=#{planId} and plan_id=#{planId}
+	</update>
 </mapper>
