@@ -97,6 +97,20 @@
 		order by join_date
 	</select>
 	
+	<select id="listMemberById" resultMap="memberAll">
+		select user_id, user_name, user_password, email, join_date
+		from members
+		where user_id not like '%admin%' and delflag = 0 and user_id like '%${userId}%'
+		order by join_date
+	</select>
+	
+	<select id="listMemberByName" resultMap="memberAll">
+		select user_id, user_name, user_password, email, join_date
+		from members
+		where user_id not like '%admin%' and delflag = 0 and user_name like '%${userName}%'
+		order by join_date
+	</select>
+	
 	<select id="getMember" parameterType="string" resultMap="memberAll">
 		select user_id, user_name, user_password, email_id, email_domain, join_date
 		from members

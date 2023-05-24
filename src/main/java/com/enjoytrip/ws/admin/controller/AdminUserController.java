@@ -54,7 +54,6 @@ public class AdminUserController {
 			List<MemberDto> list = memberService.listMember(null);
 			if(list != null && !list.isEmpty()) {
 				return new ResponseEntity<List<MemberDto>>(list, HttpStatus.OK);
-//				return new ResponseEntity<List<MemberDto>>(HttpStatus.NOT_FOUND);
 			} else {
 				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 			}
@@ -63,6 +62,39 @@ public class AdminUserController {
 		}
 		
 	}
+	
+	@GetMapping(value = "/user/list/userid/{key}")
+	public ResponseEntity<?> userListById(@PathVariable("key") String userId) {
+		logger.debug("userListById call");
+
+		try {
+			List<MemberDto> list = memberService.listMemberById(userId);
+			if(list != null && !list.isEmpty()) {
+				return new ResponseEntity<List<MemberDto>>(list, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			}
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
+	@GetMapping(value = "/user/list/username/{key}")
+	public ResponseEntity<?> userListByName(@PathVariable("key") String userName) {
+		logger.debug("userListByName call");
+		
+		try {
+			List<MemberDto> list = memberService.listMemberByName(userName);
+			if(list != null && !list.isEmpty()) {
+				return new ResponseEntity<List<MemberDto>>(list, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			}
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
 	
 	@GetMapping(value = "/user/{userid}")
 	public ResponseEntity<?> userInfo(@PathVariable("userid") String userId) {
@@ -106,7 +138,6 @@ public class AdminUserController {
 		}
 	}
 	
-	//board에 등록된 유저 글 전부 삭제 후, 유저 삭제
 	@DeleteMapping(value = "/user/{userid}")
 	public ResponseEntity<?> userDelete(@PathVariable("userid") String userId) {
 		logger.debug("userDelete userid : {}", userId);
@@ -123,7 +154,8 @@ public class AdminUserController {
 		e.printStackTrace();
 		return new ResponseEntity<String>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-
+	
+	
 
 
 }

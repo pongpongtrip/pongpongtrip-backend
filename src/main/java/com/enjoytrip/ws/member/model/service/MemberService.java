@@ -20,6 +20,8 @@ public interface MemberService {
 	
 	//Admin
 	List<MemberDto> listMember(Map<String, Object> map) throws Exception;
+	List<MemberDto> listMemberById(String userId) throws Exception;
+	List<MemberDto> listMemberByName(String userName)throws Exception;
 	MemberDto getMember(String userId) throws Exception;
 	void updateMemberAdmin(MemberDto memberDto) throws Exception;
 	void deleteMemberAdmin(String userId) throws Exception;
