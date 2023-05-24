@@ -214,6 +214,13 @@ public class AttractionRestController extends HttpServlet {
 		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
 	}
 	
+	@PostMapping("/myplan/delete")
+	public boolean deletePlan(@RequestBody AttractionPlanDto dto) throws SQLException {
+		System.out.println(dto.getUserId());
+		System.out.println(dto.getPlanId());
+		return attractionService.deletePlan(dto);
+	}
+	
 	@PostMapping("like")
 	public boolean like(@RequestBody AttractionLikeDto dto) throws SQLException {
 		System.out.println(dto.getContent_id());

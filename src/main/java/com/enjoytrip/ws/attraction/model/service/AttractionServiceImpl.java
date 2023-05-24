@@ -84,4 +84,10 @@ public class AttractionServiceImpl implements AttractionService {
 		
 	}
 
+	@Override
+	public boolean deletePlan(AttractionPlanDto dto) {
+		// TODO Auto-generated method stub
+		return sqlSession.getMapper(AttractionMapper.class).deletePlan(dto);
+	}
+
 }

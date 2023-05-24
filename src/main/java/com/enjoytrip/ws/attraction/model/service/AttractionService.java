@@ -28,4 +28,6 @@ public interface AttractionService {
 	List<AttractionPlanDetailDto> myplans(AttractionPlanDto dto);
 
 	boolean updateHit(int contentId)throws SQLException;
+
+	boolean deletePlan(AttractionPlanDto dto);
 }
