@@ -77,7 +77,16 @@ public class MemberServiceImpl implements MemberService {
 	public List<MemberDto> listMember(Map<String, Object> map) throws Exception {
 		return sqlSession.getMapper(MemberMapper.class).listMember(map);
 	}
+	
+	@Override
+	public List<MemberDto> listMemberById(String userId) throws Exception {
+		return sqlSession.getMapper(MemberMapper.class).listMemberById(userId);
+	}
 
+	@Override
+	public List<MemberDto> listMemberByName(String userName) throws Exception {
+		return sqlSession.getMapper(MemberMapper.class).listMemberByName(userName);
+	}
 
 
 	@Override
@@ -86,13 +95,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
-
 	@Override
 	public void updateMemberAdmin(MemberDto memberDto) throws Exception {
 		sqlSession.getMapper(MemberMapper.class).updateMemberAdmin(memberDto);
 		
 	}
-
 
 
 	@Override
@@ -140,6 +147,10 @@ public class MemberServiceImpl implements MemberService {
 		sqlSession.getMapper(MemberMapper.class).memberUpdate(memberDto);
 		
 	}
+
+
+
+
 
 
 
