@@ -69,6 +69,19 @@
 		limit #{start}, #{listsize}
 	</select>
 	
+	<select id="listArticleById" resultMap="article">
+		select b.article_no, b.user_id,b.plan, b.subject, b.content, b.hit, b.register_time, m.user_name
+		from board b, members m 
+		where b.user_id = m.user_id and b.user_id like '%${userId}%'
+	</select>
+	
+	<select id="listArticleBySubject" resultMap="article">
+		select b.article_no, b.user_id,b.plan, b.subject, b.content, b.hit, b.register_time, m.user_name
+		from board b, members m 
+		where b.user_id = m.user_id and b.subject like '%${subject}%'
+	</select>
+	
+	
 	<select id="getTotalArticleCount" parameterType="map" resultType="int">
 		select count(article_no)
 		from board

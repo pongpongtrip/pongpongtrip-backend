@@ -38,4 +38,8 @@ public interface BoardMapper {
 
 	List<CommentDto> listComment(int articleNo) throws SQLException;
 
+	List<BoardDto> listArticleById(String userId)throws SQLException;
+
+	List<BoardDto> listArticleBySubject(String subject)throws SQLException;
+
 }

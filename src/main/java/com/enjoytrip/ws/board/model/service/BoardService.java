@@ -6,6 +6,7 @@ import java.util.Map;
 import com.enjoytrip.util.PageNavigation;
 import com.enjoytrip.ws.board.model.BoardDto;
 import com.enjoytrip.ws.board.model.CommentDto;
+import com.enjoytrip.ws.member.model.MemberDto;
 
 public interface BoardService {
 
@@ -18,6 +19,8 @@ public interface BoardService {
 	void deleteArticle(int articleNo, String uploadPath) throws Exception;
 	boolean writeComment(CommentDto commentDto)throws Exception;
 	List<CommentDto> listComment(int articleNo)throws Exception;
+	List<BoardDto> listArticleById(String userId) throws Exception;
+	List<BoardDto> listArticleBySubject(String subject)throws Exception;
 	
 	
 }

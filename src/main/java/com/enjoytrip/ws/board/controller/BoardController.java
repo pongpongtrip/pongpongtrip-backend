@@ -67,9 +67,7 @@ public class BoardController {
 	@GetMapping("/list")
 	public List<BoardDto> list(@RequestParam Map<String, String> map) throws Exception {
 		logger.debug("list parameter pgno : {}", map.get("pgno"));
-		System.out.println("map 출력 -----------------------------");
-		System.out.println(map);
-		ModelAndView mav = new ModelAndView();
+		
 		List<BoardDto> list = boardService.listArticle(map);
 		Collections.sort(list, new Comparator<BoardDto>() {
 			@Override
@@ -82,15 +80,6 @@ public class BoardController {
 	}
 	
 	
-//	@GetMapping("/write")
-//	public String write(@RequestParam Map<String, String> map, Model model) {
-//		logger.debug("write call parameter {}", map);
-//		model.addAttribute("pgno", map.get("pgno"));
-//		model.addAttribute("key", map.get("key"));
-//		model.addAttribute("word", map.get("word"));
-//		return "board/boardwrite";
-//	}
-
 	@PostMapping("/write")
 	public void write(@RequestBody BoardDto boardDto) throws Exception {
 		logger.debug("write boardDto : {}", boardDto);
@@ -99,7 +88,6 @@ public class BoardController {
 
 		boardService.writeArticle(boardDto);
 		
-//		return "write test";
 	}
 	
 	@GetMapping("/view")
@@ -109,57 +97,9 @@ public class BoardController {
 		System.out.println(dto.getArticleNo());
 		BoardDto boardDto = boardService.getArticle(dto.getArticleNo());
 		boardService.updateHit(dto.getArticleNo());
-		
-//		Map<String, Object> responseMap = new HashMap<>();
-		// Populate the responseMap with the necessary data from the boardDto
-//		responseMap.put("article", boardDto);
-//		responseMap.put("pgno", map.get("pgno"));
-//		responseMap.put("key", map.get("key"));
-//		responseMap.put("word", map.get("word"));
-		
-//		model.addAttribute("article", boardDto);
-//		model.addAttribute("pgno", map.get("pgno"));
-//		model.addAttribute("key", map.get("key"));
-//		model.addAttribute("word", map.get("word"));
+
 		return boardDto;
 	}
-	
-//	@GetMapping("/view")
-//	public Map<String, Object> view(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map, Model model)
-//			throws Exception {
-//		logger.debug("view articleNo : {}", articleNo);
-//		BoardDto boardDto = boardService.getArticle(articleNo);
-//		boardService.updateHit(articleNo);
-//		
-//		Map<String, Object> responseMap = new HashMap<>();
-//		// Populate the responseMap with the necessary data from the boardDto
-//		responseMap.put("article", boardDto);
-//		responseMap.put("pgno", map.get("pgno"));
-//		responseMap.put("key", map.get("key"));
-//		responseMap.put("word", map.get("word"));
-//		
-////		model.addAttribute("article", boardDto);
-////		model.addAttribute("pgno", map.get("pgno"));
-////		model.addAttribute("key", map.get("key"));
-////		model.addAttribute("word", map.get("word"));
-//		return responseMap;
-//	}
-
-//	@GetMapping("/modify")
-//	public void modify(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map, Model model)
-//			throws Exception {
-//		logger.debug("modify articleNo : {}", articleNo);
-//		BoardDto boardDto = boardService.getArticle(articleNo);
-//		
-//		Map<String, Object> responseMap = new HashMap<>();
-//		// Populate the responseMap with the necessary data from the boardDto
-//		responseMap.put("article", boardDto);
-//		responseMap.put("pgno", map.get("pgno"));
-//		responseMap.put("key", map.get("key"));
-//		responseMap.put("word", map.get("word"));
-//		
-////		return "board/boardmodify";
-//	}
 
 	@PostMapping("/modify")
 	public void modify(@RequestBody BoardDto boardDto) throws Exception {
@@ -168,10 +108,6 @@ public class BoardController {
 		System.out.println(boardDto.getContent());
 		boardService.modifyArticle(boardDto);
 		
-//		redirectAttributes.addAttribute("pgno", map.get("pgno"));
-//		redirectAttributes.addAttribute("key", map.get("key"));
-//		redirectAttributes.addAttribute("word", map.get("word"));
-//		return "redirect:/board/list";
 	}
 
 	@GetMapping("/delete")
@@ -179,10 +115,6 @@ public class BoardController {
 		logger.debug("delete articleNo : {}", dto.getArticleNo());
 		System.out.println("삭제" + dto.getArticleNo());
 		boardService.deleteArticle(dto.getArticleNo(), uploadPath);
-//		redirectAttributes.addAttribute("pgno", map.get("pgno"));
-//		redirectAttributes.addAttribute("key", map.get("key"));
-//		redirectAttributes.addAttribute("word", map.get("word"));
-//		return "redirect:/board/list";
 	}
 
 	@GetMapping("/download")
@@ -232,6 +164,43 @@ public class BoardController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/list/userid/{key}")
+	public ResponseEntity<?> userListById(@PathVariable("key") String userId) {
+		logger.debug("userListById call");
+		
+		try {
+			List<BoardDto> list = boardService.listArticleById(userId);
+			
+			if(list != null && !list.isEmpty()) {
+				return new ResponseEntity<List<BoardDto>>(list, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/list/subject/{key}")
+	public ResponseEntity<?> userListBySubject(@PathVariable("key") String subject) {
+		logger.debug("userListById call");
+
+		try {
+			List<BoardDto> list = boardService.listArticleBySubject(subject);
+			System.out.println(list.toString());
+			
+			if(list != null && !list.isEmpty()) {
+				return new ResponseEntity<List<BoardDto>>(list, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
+	}
+
 
 
 	

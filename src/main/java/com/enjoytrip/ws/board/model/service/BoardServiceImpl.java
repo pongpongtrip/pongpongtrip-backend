@@ -14,6 +14,7 @@ import com.enjoytrip.ws.board.model.BoardDto;
 import com.enjoytrip.ws.board.model.CommentDto;
 import com.enjoytrip.ws.board.model.FileInfoDto;
 import com.enjoytrip.ws.board.model.mapper.BoardMapper;
+import com.enjoytrip.ws.member.model.MemberDto;
 import com.enjoytrip.util.SizeConstant;
 
 @Service
@@ -122,6 +123,16 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<CommentDto> listComment(int articleNo) throws Exception {
 		return boardMapper.listComment(articleNo);
+	}
+
+	@Override
+	public List<BoardDto> listArticleById(String userId) throws Exception {
+		return boardMapper.listArticleById(userId);
+	}
+
+	@Override
+	public List<BoardDto> listArticleBySubject(String subject) throws Exception {
+		return boardMapper.listArticleBySubject(subject);
 	}
 	
 	
