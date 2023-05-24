@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.enjoytrip.util.PageNavigation;
 import com.enjoytrip.ws.board.model.BoardDto;
+import com.enjoytrip.ws.board.model.CommentDto;
 import com.enjoytrip.ws.board.model.FileInfoDto;
 import com.enjoytrip.ws.board.model.mapper.BoardMapper;
 import com.enjoytrip.util.SizeConstant;
@@ -111,6 +112,16 @@ public class BoardServiceImpl implements BoardService {
 			file.delete();
 		}
 		
+	}
+
+	@Override
+	public boolean writeComment(CommentDto commentDto) throws Exception {
+		return boardMapper.writeComment(commentDto);
+	}
+
+	@Override
+	public List<CommentDto> listComment(int articleNo) throws Exception {
+		return boardMapper.listComment(articleNo);
 	}
 	
 	

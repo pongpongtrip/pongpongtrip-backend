@@ -16,10 +16,13 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +34,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.enjoytrip.util.PageNavigation;
 import com.enjoytrip.ws.board.model.BoardDto;
+import com.enjoytrip.ws.board.model.CommentDto;
 import com.enjoytrip.ws.board.model.FileInfoDto;
 import com.enjoytrip.ws.board.model.service.BoardService;
 import com.enjoytrip.ws.member.model.MemberDto;
@@ -43,7 +47,9 @@ import com.enjoytrip.ws.member.model.MemberDto;
 @RequestMapping("/board")
 public class BoardController {
 	
-	private final Logger logger = LoggerFactory.getLogger(BoardController.class);
+	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
 	
 	@Value("${file.path}")
 	private String uploadPath;
@@ -89,41 +95,7 @@ public class BoardController {
 	public void write(@RequestBody BoardDto boardDto) throws Exception {
 		logger.debug("write boardDto : {}", boardDto);
 		//여기
-		System.out.println(boardDto.getPlan());
-		// 임시로 설정
-		MemberDto memberDto = new MemberDto("admin", "관리자", "1234", "2023-05-02", 0);
-		boardDto.setUserId(memberDto.getUserId());
-		// 원래 코드
-//		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-//		boardDto.setUserId(memberDto.getUserId());
-		
-
-//		FileUpload 관련 설정.
-//		logger.debug("MultipartFile.isEmpty : {}", files[0].isEmpty());
-//		if (!files[0].isEmpty()) {
-//			String today = new SimpleDateFormat("yyMMdd").format(new Date());
-//			String saveFolder = uploadPath + File.separator + today;
-//			logger.debug("저장 폴더 : {}", saveFolder);
-//			File folder = new File(saveFolder);
-//			if (!folder.exists())
-//				folder.mkdirs();
-//			List<FileInfoDto> fileInfos = new ArrayList<FileInfoDto>();
-//			for (MultipartFile mfile : files) {
-//				FileInfoDto fileInfoDto = new FileInfoDto();
-//				String originalFileName = mfile.getOriginalFilename();
-//				if (!originalFileName.isEmpty()) {
-//					String saveFileName = UUID.randomUUID().toString()
-//							+ originalFileName.substring(originalFileName.lastIndexOf('.'));
-//					fileInfoDto.setSaveFolder(today);
-//					fileInfoDto.setOriginalFile(originalFileName);
-//					fileInfoDto.setSaveFile(saveFileName);
-//					logger.debug("원본 파일 이름 : {}, 실제 저장 파일 이름 : {}", mfile.getOriginalFilename(), saveFileName);
-//					mfile.transferTo(new File(folder, saveFileName));
-//				}
-//				fileInfos.add(fileInfoDto);
-//			}
-//			boardDto.setFileInfos(fileInfos);
-//		}
+		System.out.println(boardDto);
 
 		boardService.writeArticle(boardDto);
 		
@@ -222,6 +194,44 @@ public class BoardController {
 		fileInfo.put("sfile", sfile);
 		return new ModelAndView("fileDownLoadView", "downloadFile", fileInfo);
 	}
+	
+	@PostMapping("/comment/write")
+	public ResponseEntity<String> writeComment(@RequestBody CommentDto commentDto){
+		logger.debug("memberDto info : {}", commentDto);
+		
+		System.out.println(commentDto.getUserName());
+		
+		try {
+			if(boardService.writeComment(commentDto)) {
+				return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
+	}
+	
+	@GetMapping("/comment/list/{articleno}")
+	public ResponseEntity<?> commentList(@PathVariable("articleno") String articleNo){
+//		logger.debug("articleNo : ", articleNo);
+		
+		List<CommentDto> list;
+		try {
+			list = boardService.listComment(Integer.parseInt(articleNo));
+			
+			System.out.println(list.toString());
+			
+			if(list!= null && !list.isEmpty()) {
+				return new ResponseEntity<List<CommentDto>>(list, HttpStatus.OK);
+			}else {
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+		return new ResponseEntity<String>(FAIL, HttpStatus.OK);
+	}
+	
 
 
 	

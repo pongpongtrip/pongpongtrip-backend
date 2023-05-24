@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.enjoytrip.util.PageNavigation;
 import com.enjoytrip.ws.board.model.BoardDto;
+import com.enjoytrip.ws.board.model.CommentDto;
 
 public interface BoardService {
 
@@ -15,6 +16,8 @@ public interface BoardService {
 	void updateHit(int articleNo) throws Exception;
 	void modifyArticle(BoardDto boardDto) throws Exception;
 	void deleteArticle(int articleNo, String uploadPath) throws Exception;
+	boolean writeComment(CommentDto commentDto)throws Exception;
+	List<CommentDto> listComment(int articleNo)throws Exception;
 	
 	
 }

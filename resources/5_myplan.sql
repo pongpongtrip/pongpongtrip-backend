@@ -11,3 +11,5 @@ CREATE TABLE IF NOT EXISTS `attraction`.`plan` (
   FOREIGN KEY (`content_id`) REFERENCES `attraction`.`attraction_info`(`content_id`),
   FOREIGN KEY (`user_id`) REFERENCES `attraction`.`members`(`user_id`)
 );
+
+ALTER TABLE `attraction`.`plan` ADD `delflag` tinyint(1) NOT NULL DEFAULT 0;

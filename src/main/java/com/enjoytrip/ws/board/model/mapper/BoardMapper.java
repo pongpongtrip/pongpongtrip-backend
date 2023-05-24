@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.enjoytrip.ws.board.model.BoardDto;
+import com.enjoytrip.ws.board.model.CommentDto;
 import com.enjoytrip.ws.board.model.FileInfoDto;
 import com.enjoytrip.ws.member.model.MemberDto;
 
@@ -32,5 +33,9 @@ public interface BoardMapper {
 	void deleteFile(int articleNo) throws Exception;
 
 	void deleteArticle(int articleNo)throws SQLException;
+
+	boolean writeComment(CommentDto commentDto)throws SQLException;
+
+	List<CommentDto> listComment(int articleNo) throws SQLException;
 
 }

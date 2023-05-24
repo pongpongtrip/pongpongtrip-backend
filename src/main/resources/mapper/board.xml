@@ -25,6 +25,14 @@
 		<result column="save_file" property="saveFile"/>
 	</resultMap>
 
+	<resultMap type="commentDto" id="comment">
+		<result column="article_no" property="articleNo"/>
+		<result column="user_name" property="userName"/>
+		<result column="content" property="content"/>
+		<result column="register_time" property="registerTime"/>
+	</resultMap>
+	
+
 	<insert id="writeArticle" parameterType="boardDto">
 		insert into board (user_id, subject, content, hit, register_time,plan)
 		values (#{userId}, #{subject}, #{content}, 0, now(), #{plan})
@@ -103,5 +111,17 @@
 		delete from board
 		where article_no = #{articleNo}
 	</delete>
+	
+	<insert id="writeComment" parameterType="commentDto">
+		insert into comments (article_no, user_name, content, register_time)
+		values (#{articleNo}, #{userName}, #{content}, now());
+	</insert>
+
+	<select id = "listComment" parameterType="int" resultMap= "comment">
+	select user_name, content, register_time
+	from comments
+	where article_no = #{articleNo}
+	</select>
+	
 
 </mapper>
