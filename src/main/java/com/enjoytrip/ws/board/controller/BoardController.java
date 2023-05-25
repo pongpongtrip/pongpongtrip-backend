@@ -73,7 +73,7 @@ public class BoardController {
 			@Override
 			public int compare(BoardDto o1, BoardDto o2) {
 				// TODO Auto-generated method stub
-				return Integer.compare(o1.getArticleNo(), o2.getArticleNo());
+				return -Integer.compare(o1.getArticleNo(), o2.getArticleNo());
 			}
 		});
 		return list;
