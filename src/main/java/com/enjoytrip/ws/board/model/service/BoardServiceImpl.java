@@ -112,6 +112,11 @@ public class BoardServiceImpl implements BoardService {
 			File file = new File(path + File.separator + fileInfoDto.getSaveFolder() + File.separator + fileInfoDto.getSaveFile());
 			file.delete();
 		}
+	}
+	
+	@Override
+	public void deleteComments(int articleNo) throws Exception {
+		boardMapper.deleteComments(articleNo);
 		
 	}
 

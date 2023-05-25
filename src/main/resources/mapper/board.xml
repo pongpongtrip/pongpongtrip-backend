@@ -125,6 +125,11 @@
 		where article_no = #{articleNo}
 	</delete>
 	
+	<delete id="deleteComments" parameterType="int">
+		delete from comments
+		where article_no = #{articleNo}
+	</delete>
+	
 	<insert id="writeComment" parameterType="commentDto">
 		insert into comments (article_no, user_name, content, register_time)
 		values (#{articleNo}, #{userName}, #{content}, now());

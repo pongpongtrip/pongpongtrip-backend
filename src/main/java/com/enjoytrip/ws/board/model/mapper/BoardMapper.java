@@ -34,6 +34,8 @@ public interface BoardMapper {
 
 	void deleteArticle(int articleNo)throws SQLException;
 
+	void deleteComments(int articleNo)throws SQLException;
+
 	boolean writeComment(CommentDto commentDto)throws SQLException;
 
 	List<CommentDto> listComment(int articleNo) throws SQLException;
@@ -41,5 +43,6 @@ public interface BoardMapper {
 	List<BoardDto> listArticleById(String userId)throws SQLException;
 
 	List<BoardDto> listArticleBySubject(String subject)throws SQLException;
+
 
 }

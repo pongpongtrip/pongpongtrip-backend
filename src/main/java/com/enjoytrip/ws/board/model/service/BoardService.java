@@ -16,6 +16,7 @@ public interface BoardService {
 	BoardDto getArticle(int articleNo) throws Exception;
 	void updateHit(int articleNo) throws Exception;
 	void modifyArticle(BoardDto boardDto) throws Exception;
+	void deleteComments(int articleNo) throws Exception;
 	void deleteArticle(int articleNo, String uploadPath) throws Exception;
 	boolean writeComment(CommentDto commentDto)throws Exception;
 	List<CommentDto> listComment(int articleNo)throws Exception;

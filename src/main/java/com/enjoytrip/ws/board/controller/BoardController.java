@@ -94,9 +94,11 @@ public class BoardController {
 	public BoardDto view(BoardDto dto)
 			throws Exception {
 //		logger.debug("view articleNo : {}", );
-		System.out.println(dto.getArticleNo());
+		System.out.println("article no = > "+dto.getArticleNo());
 		BoardDto boardDto = boardService.getArticle(dto.getArticleNo());
 		boardService.updateHit(dto.getArticleNo());
+		
+		System.out.println(boardDto.getPlan());
 
 		return boardDto;
 	}
@@ -114,6 +116,8 @@ public class BoardController {
 	public void delete(BoardDto dto) throws Exception {
 		logger.debug("delete articleNo : {}", dto.getArticleNo());
 		System.out.println("삭제" + dto.getArticleNo());
+		
+		boardService.deleteComments(dto.getArticleNo());
 		boardService.deleteArticle(dto.getArticleNo(), uploadPath);
 	}
 
