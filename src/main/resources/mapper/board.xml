@@ -64,21 +64,20 @@
 		select b.article_no, b.user_id,b.plan, b.subject, b.content, b.hit, b.register_time, m.user_name
 		from board b, members m 
 		where b.user_id = m.user_id
-		<include refid="search"></include>
-		order by b.article_no desc
-		limit #{start}, #{listsize}
 	</select>
 	
 	<select id="listArticleById" resultMap="article">
 		select b.article_no, b.user_id,b.plan, b.subject, b.content, b.hit, b.register_time, m.user_name
 		from board b, members m 
 		where b.user_id = m.user_id and b.user_id like '%${userId}%'
+		order by b.article_no desc
 	</select>
 	
 	<select id="listArticleBySubject" resultMap="article">
 		select b.article_no, b.user_id,b.plan, b.subject, b.content, b.hit, b.register_time, m.user_name
 		from board b, members m 
 		where b.user_id = m.user_id and b.subject like '%${subject}%'
+		order by b.article_no desc
 	</select>
 	
 	
@@ -95,6 +94,7 @@
 		from board b, members m
 		where b.user_id = m.user_id
 		and b.article_no = #{articleNo}
+		order by b.article_no desc
 	</select>
 	
 	<select id="fileInfoList" resultMap="file">
